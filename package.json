@@ -1,0 +1,58 @@
+{
+  "name": "@miniclip/instant",
+  "version": "0.1.0",
+  "description": "Miniclip FB Instant Games SDK",
+  "main": "dist/mcinstant.js",
+  "typings": "./dist/index.d.ts",
+  "types": "./dist/index.d.ts",
+  "files": [
+    "dist/**/*.js",
+    "dist/**/*.d.ts"
+  ],
+  "scripts": {
+    "test": "npm run build && npm run test:spec",
+    "test:spec": "nyc mocha -r ts-node/register -r src/core/tests/setup.js src/**/*.spec.ts || true",
+    "build": "npm run clean && tsc && npm run clean:js && webpack --config webpack.js",
+    "clean": "shx rm -rf ./dist ./_bundles",
+    "clean:js": "shx rm -rf ./dist/*.js ./dist/**/*.js",
+    "clean:docs": "shx rm -rf ./docs",
+    "docs": "npm run clean:docs && typedoc --options ./typedoc.js src && touch docs/.nojekyll",
+    "deploy-docs": "git subtree push --prefix docs/ origin gh-pages"
+  },
+  "repository": {
+    "type": "git",
+    "url": "ssh://git@stash.miniclip.com:7999/fbi/fbi-sdk.git"
+  },
+  "author": "Miniclip",
+  "private": true,
+  "devDependencies": {
+    "@types/chai": "^4.1.7",
+    "@types/chai-as-promised": "^7.1.0",
+    "@types/mocha": "^5.2.5",
+    "@types/nock": "9.3.0",
+    "@types/sinon": "^7.0.5",
+    "browserify": "^16.2.3",
+    "chai": "^4.2.0",
+    "chai-as-promised": "^7.1.1",
+    "codecov": "^3.1.0",
+    "mocha": "^5.2.0",
+    "nock": "^10.0.2",
+    "nyc": "^13.1.0",
+    "shx": "^0.3.2",
+    "sinon": "^7.2.3",
+    "source-map-support": "^0.5.9",
+    "ts-loader": "^5.3.3",
+    "ts-node": "^7.0.1",
+    "tsify": "^4.0.1",
+    "typedoc": "^0.14.2",
+    "typescript": "^3.2.1",
+    "webpack": "^4.29.0",
+    "webpack-cli": "^3.2.1"
+  },
+  "dependencies": {
+    "@types/loglevel": "^1.5.3",
+    "axios": "^0.18.0",
+    "axios-retry": "^3.1.1",
+    "loglevel": "^1.6.1"
+  }
+}

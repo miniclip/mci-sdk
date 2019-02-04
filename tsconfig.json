@@ -1,0 +1,44 @@
+{
+    "compilerOptions": {
+      "declaration": true,
+      "removeComments": true,
+      "target": "es2015",
+      "module": "commonjs",
+      "moduleResolution": "node",
+      "noImplicitAny": true,
+      "noImplicitReturns": true,
+      "noImplicitThis": true,
+      "noUnusedLocals": false,
+      "noUnusedParameters": false,
+      "strictNullChecks": true,
+      "strictFunctionTypes": false,
+      
+      "noFallthroughCasesInSwitch": true,
+      "preserveConstEnums": true,
+      "suppressImplicitAnyIndexErrors": true,
+      "sourceMap": false,
+      "typeRoots" : ["./node_modules/@types", "./types"],
+      "baseUrl": ".",
+      "outDir": "dist",
+      "lib": [
+        "dom",
+        "es5",
+        "es2015",
+        "es2016.array.include",
+        "esnext.asynciterable"
+      ]
+    },
+    "include": [
+      "src/**/*",
+      "types/**/*.d.ts"
+    ],
+    "exclude": [
+      "src/**/*.spec.js",
+      "src/**/*.js",
+      "dist"
+    ],
+    "jsdoc": {
+      "out": "support/jsdoc",
+      "access": "public"
+    }
+  }
