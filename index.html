@@ -66,36 +66,28 @@
 				<p>Add to your package.json:</p>
 				<pre><code class="language-json">{
     <span class="hljs-attr">"dependencies"</span> : {
-        <span class="hljs-attr">"@miniclip/instant"</span>: <span class="hljs-string">"git+ssh://git@stash.miniclip.com:7999/fbi/fbi-sdk.git#master"</span>
+        <span class="hljs-attr">"@miniclip/instant"</span>: <span class="hljs-string">"git@github.com:miniclip/fbi-sdk.git"</span>
     }
 }</code></pre>
 				<h2 id="usage">Usage</h2>
 				<h3 id="create-a-new-mcinstant">Create a new MCInstant</h3>
 				<pre><code class="language-typescript"><span class="hljs-keyword">import</span> { MCInstant } <span class="hljs-keyword">from</span> <span class="hljs-string">"@miniclip/instant"</span>;
 
-<span class="hljs-keyword">export</span> <span class="hljs-keyword">default</span> <span class="hljs-keyword">class</span> MyApp {
-    <span class="hljs-keyword">public</span> mci:MCInstant;
-    <span class="hljs-keyword">constructor</span>(<span class="hljs-params"></span>) {
-        <span class="hljs-keyword">this</span>.mci = <span class="hljs-keyword">new</span> MCInstant({app_id: process.env.APP_ID});
-    }
-}</code></pre>
+<span class="hljs-keyword">const</span> mci = <span class="hljs-keyword">new</span> MCInstant({app_id: process.env.APP_ID});</code></pre>
 				<h3 id="get-challenges">Get Challenges</h3>
-				<pre><code class="language-typescript"><span class="hljs-keyword">const</span> myApp = <span class="hljs-keyword">new</span> MyApp();
-myApp.mci.challenges.list().then(<span class="hljs-function">(<span class="hljs-params">response</span>) =&gt;</span> {
-    <span class="hljs-built_in">console</span>.log(response);
+				<pre><code class="language-typescript">mci.challenges.getAll().then(<span class="hljs-function">(<span class="hljs-params">list</span>) =&gt;</span> {
+    <span class="hljs-built_in">console</span>.log(list);
 });</code></pre>
 				<h3 id="new-challenge">New Challenge</h3>
-				<pre><code class="language-typescript"><span class="hljs-keyword">import</span> { MessageUpdate } <span class="hljs-keyword">from</span> <span class="hljs-string">"@miniclip/instant"</span>;
-...
-<span class="hljs-keyword">const</span> myApp = <span class="hljs-keyword">new</span> MyApp();
-<span class="hljs-keyword">let</span> message:MessageUpdate;
-myApp.mci.challenges.new(message).then(<span class="hljs-function">(<span class="hljs-params">response</span>) =&gt;</span> {
-    <span class="hljs-built_in">console</span>.log(<span class="hljs-string">"New challenge created"</span>);
-    <span class="hljs-built_in">console</span>.log(response);
-});</code></pre>
+				<pre><code class="language-typescript">mci.challenges.create({ duration: <span class="hljs-number">60</span>*<span class="hljs-number">60</span>*<span class="hljs-number">24</span>*<span class="hljs-number">5</span> })  <span class="hljs-comment">// 5 days challenge</span>
+    .then(<span class="hljs-function">(<span class="hljs-params">challenge</span>) =&gt;</span> {
+        challenge.setScore(<span class="hljs-number">10</span>);
+        challenge.save();
+
+        <span class="hljs-comment">// FBInstant.updateAsync(...)</span>
+    })</code></pre>
 				<h3 id="get-wallet">Get Wallet</h3>
-				<pre><code class="language-typescript"><span class="hljs-keyword">const</span> myApp = <span class="hljs-keyword">new</span> MyApp();
-myApp.mci.wallet.getBalance().then(<span class="hljs-function">(<span class="hljs-params">response</span>) =&gt;</span> {
+				<pre><code class="language-typescript">mci.wallet.getBalance().then(<span class="hljs-function">(<span class="hljs-params">response</span>) =&gt;</span> {
     <span class="hljs-built_in">console</span>.log(response);
 });</code></pre>
 			</div>
