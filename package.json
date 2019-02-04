@@ -21,7 +21,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "ssh://git@stash.miniclip.com:7999/fbi/fbi-sdk.git"
+    "url": "git@github.com:miniclip/fbi-sdk.git"
   },
   "author": "Miniclip",
   "private": true,

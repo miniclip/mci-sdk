@@ -8,7 +8,7 @@ Add to your package.json:
 ```json
 {
     "dependencies" : {
-        "@miniclip/instant": "git+ssh://git@stash.miniclip.com:7999/fbi/fbi-sdk.git#master"
+        "@miniclip/instant": "git@github.com:miniclip/fbi-sdk.git"
     }
 }
 ```
@@ -20,41 +20,33 @@ Add to your package.json:
 ```typescript
 import { MCInstant } from "@miniclip/instant";
 
-export default class MyApp {
-    public mci:MCInstant;
-    constructor() {
-        this.mci = new MCInstant({app_id: process.env.APP_ID});
-    }
-}
+const mci = new MCInstant({app_id: process.env.APP_ID});
 ```
 
 ### Get Challenges
 
 ```typescript
-const myApp = new MyApp();
-myApp.mci.challenges.list().then((response) => {
-    console.log(response);
+mci.challenges.getAll().then((list) => {
+    console.log(list);
 });
 ```
 
 ### New Challenge
 
 ```typescript
-import { MessageUpdate } from "@miniclip/instant";
-...
-const myApp = new MyApp();
-let message:MessageUpdate;
-myApp.mci.challenges.new(message).then((response) => {
-    console.log("New challenge created");
-    console.log(response);
-});
+mci.challenges.create({ duration: 60*60*24*5 })  // 5 days challenge
+    .then((challenge) => {
+        challenge.setScore(10);
+        challenge.save();
+
+        // FBInstant.updateAsync(...)
+    })
 ```
 
 ### Get Wallet
 
 ```typescript
-const myApp = new MyApp();
-myApp.mci.wallet.getBalance().then((response) => {
+mci.wallet.getBalance().then((response) => {
     console.log(response);
 });
 ```
