@@ -1,9 +1,10 @@
+import { BaseService } from "../core/services";
 export interface ISessionService {
     setData(params: Object): void;
     setPublicState(data: Object): void;
     syncSession(): void;
 }
-export declare class SessionService implements ISessionService {
+export declare class SessionService extends BaseService {
     private static PAYLOAD_NS;
     private internalState;
     private publicState;
