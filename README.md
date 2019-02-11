@@ -1,6 +1,5 @@
-# FB Instant SDK
-
-Miniclip FB Instant Games SDK
+# Miniclip FB Instant SDK
+This is a companion sdk to be used in Facebook Instant Games projects published by Miniclip.
 
 ## Installation
 
@@ -8,7 +7,7 @@ Add to your package.json:
 ```json
 {
     "dependencies" : {
-        "@miniclip/instant": "git@github.com:miniclip/fbi-sdk.git"
+        "@miniclip/instant": "https://github.com/miniclip/fbi-sdk.git"
     }
 }
 ```
