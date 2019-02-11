@@ -1,5 +1,6 @@
 import { Challenge } from "../models";
 import { ChallengeType } from "../models/Challenge";
+import { BaseService } from "../core/services";
 
 export interface ISessionService {
   setData(params: Object): void;
@@ -7,7 +8,7 @@ export interface ISessionService {
   syncSession(): void;
 }
 
-export class SessionService implements ISessionService {
+export class SessionService extends BaseService {
   private static PAYLOAD_NS: string = "mc:sessionPayload";
 
   private internalState: any = {};
@@ -18,8 +19,12 @@ export class SessionService implements ISessionService {
   private timezoneOffset: number;
 
   constructor() {
+    super();
+
     this._publicSession = new PublicSession(this);
     this.timezoneOffset = new Date().getTimezoneOffset();
+
+    this.syncSession();
   }
 
   getPublicSession() {
@@ -65,5 +70,6 @@ export class PublicSession {
 
   set(obj: any) {
     this._session.setPublicState(obj);
+    this._session.syncSession();
   }
 }
