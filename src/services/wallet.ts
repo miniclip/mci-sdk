@@ -123,4 +123,8 @@ export class PublicWallet {
     public getBalance(filter?: Array<string>) {
         return this.wallet.getBalance(filter);
     }
+
+    public addBalance(value:number, currency:string){
+        return this.wallet.addBalance(value, currency);
+    }
 }
