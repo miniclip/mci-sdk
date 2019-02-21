@@ -96,6 +96,7 @@ export class WalletService extends BaseService {
             await this.setBalance(currency, currentValue);
             return true;
         } catch(error){
+            console.error(error);
         }
         return false;
     }
