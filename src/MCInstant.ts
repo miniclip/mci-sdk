@@ -12,7 +12,7 @@ import { InstantStorage } from "./utils/instant-storage";
 export class MCInstant {
   private static loggerName = "mc:instant";
 
-  private di: DIContainer;
+  public di: DIContainer;
   private logger: Logger;
 
   public wallet: PublicWallet; 
@@ -22,16 +22,20 @@ export class MCInstant {
     endpoint = "https://fbi-webhooks-server-dev.miniclippt.com/apps/",
     logLevel = LogLevel.INFO,
     app_id = 0,
-    challenge_reward = { value: 100, currency: "points" }
+    challenge_reward = { value: 100, currency: "points" },
+    currencies = [ "points" ]
   }: MCInstantOptions = {}) {
     this.di = new DIContainer();
 
     this.logger = getLogger(MCInstant.loggerName);
     this.logger.setLevel(logLevel);
 
-    const store = this.di.bind(Modules.GLOBAL_STORE, new Store());
+    const _store = this.di.bind(Modules.GLOBAL_STORE, new Store());
+    const _currencies:CurrencyService = new CurrencyService();
+    _currencies.clear();
+    _currencies.addCurrencies(currencies);
 
-    store.set("challenge_reward", challenge_reward);
+    _store.set("challenge_reward", challenge_reward);
 
     const network = new NetworkManager({
       endpointURL: endpoint + app_id,
@@ -41,7 +45,7 @@ export class MCInstant {
 
     this.di.bind(Modules.SESSION, new SessionService());
     this.di.bind(Modules.INSTANT_STORAGE, new InstantStorage());
-    this.di.bind(Modules.CURRENCIES, new CurrencyService());
+    this.di.bind(Modules.CURRENCIES, _currencies);
     this.di.bind(Modules.WALLET, new WalletService());
     this.di.bind(Modules.CHALLENGES, new ChallengeService());
 
@@ -62,4 +66,5 @@ export interface MCInstantOptions {
   logLevel?: LogLevel;
   app_id?: number;
   challenge_reward?: CurrencyAmount;
+  currencies?: string[]
 }

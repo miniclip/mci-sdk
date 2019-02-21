@@ -6,5 +6,7 @@ export declare type CurrencyAmount = {
 export declare class CurrencyService extends BaseService {
     private _currencies;
     addCurrency(name: string): void;
+    clear(): void;
+    addCurrencies(name: string[]): void;
     get(): string[];
 }
