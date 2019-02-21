@@ -12,7 +12,7 @@ import { InstantStorage } from "./utils/instant-storage";
 export class MCInstant {
   private static loggerName = "mc:instant";
 
-  private di: DIContainer;
+  public di: DIContainer;
   private logger: Logger;
 
   public wallet: PublicWallet; 
