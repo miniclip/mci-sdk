@@ -17,4 +17,5 @@ export declare class PublicWallet {
     private wallet;
     constructor(wallet: WalletService);
     getBalance(filter?: Array<string>): Promise<Object>;
+    addBalance(value: number, currency: string): Promise<boolean>;
 }
