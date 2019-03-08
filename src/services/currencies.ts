@@ -3,7 +3,7 @@ import { isArray } from "util";
 
 export type CurrencyAmount = {
     value:number;
-    currency?:string
+    currency:string
 }
 
 const BASE_CURRENCIES = ["points"];

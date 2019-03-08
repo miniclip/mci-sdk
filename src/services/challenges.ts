@@ -6,11 +6,19 @@ import { Challenge } from "../models";
 import { IDataStore } from "../store";
 import { BaseService } from "../core/services";
 import { EVENT_CHALLENGE_ENDED } from "../events";
+import { CurrencyAmount } from "./currencies";
+import { ChallengeType } from "src/models/challenge";
 
 type CreatePayload = {
   score?: number;
   duration?: number;
 };
+
+export type ChallengeEndedPayload = {
+  challenge: ChallengeType;
+  won: boolean;
+  reward: CurrencyAmount
+}
 
 export class ChallengeService extends BaseService{
   private wallet: WalletService;
@@ -166,14 +174,15 @@ export class ChallengeService extends BaseService{
       //console.log("--Consumed challenge", response);
 
       // add to wallet
-      let reward = this.store.get("challenge_reward",  null);
+      let reward:CurrencyAmount = this.store.get("challenge_reward",  null);
       
       const winner = this.hasPlayerWon(challenge);
       if (reward != null && winner){
         this.wallet.addBalance(reward.value, reward.currency);
       }
 
-      this.events.emit(EVENT_CHALLENGE_ENDED, { challenge: challenge.data, won: winner, reward });
+      let payload: ChallengeEndedPayload = { challenge: challenge.data, won: winner, reward };
+      this.events.emit(EVENT_CHALLENGE_ENDED, payload);
 
       return true;
     } catch (error) {

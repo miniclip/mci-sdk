@@ -3,7 +3,7 @@ import { Modules } from ".";
 import { InstantStorage } from "../utils/instant-storage";
 import { CurrencyService } from "./currencies";
 import { BaseService } from "../core/services";
-import { WALLET_BALANCE_UPDATED } from "../events";
+import { EVENT_WALLET_BALANCE_UPDATED } from "../events";
 
 const WALLET_STORAGE_KEY = "_wallet";
 
@@ -70,7 +70,7 @@ export class WalletService extends BaseService {
             this._cloud.set(WALLET_STORAGE_KEY, balance)
                 .then(this._cloud.flush)
                 .then((success) => {
-                    this.events.emit(WALLET_BALANCE_UPDATED)
+                    this.events.emit(EVENT_WALLET_BALANCE_UPDATED)
                     resolve(success)
                 });
         });
