@@ -30,4 +30,4 @@ mci.challenges.create({ duration: 60*60*24*5 })  // 5 days challenge
 ## Events
 
 |Event | Description | Payload |
-| challenge_ended | | [ChallengeEndedPayload]({{ site.url }}/api/modules/_services_challenges_.html#challengeendedpayload) |
+| challenge_ended | | [ChallengeEndedPayload]({{ site.baseurl }}/api/modules/_services_challenges_.html#challengeendedpayload) |
