@@ -11,10 +11,10 @@ If you have [npm installed](https://www.npmjs.com/get-npm), include MCInstant in
 npm install --save https://github.com/miniclip/fbi-sdk.git
 ```
  
-### Create a new MCInstant
+### Initialize the SDK
  
 ```typescript
 import { MCInstant } from "@miniclip/instant";
 
-const mci = new MCInstant({app_id: process.env.APP_ID});
+const mci = new MCInstant({ app_id: process.env.APP_ID });
 ```
