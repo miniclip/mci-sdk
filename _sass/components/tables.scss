@@ -1,0 +1,21 @@
+table {
+
+    td,
+    th {
+        padding: 5px 10px;
+    }
+    
+    tr:nth-child(even) {
+        background: $TABLE_ODD_BG_COLOR
+    }
+
+    tr:first-child {
+        background: none;
+        border-bottom: 1px dotted grey;
+
+        td {
+            padding-bottom: 2px;
+            font-weight: bold;
+        }
+    }
+}
