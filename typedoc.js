@@ -1,5 +1,5 @@
 module.exports = {
-  out: "./docs",
+  out: "./docs/api",
   exclude: [
     '**/*.spec.ts',
     '**/index.ts',

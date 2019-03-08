@@ -1,17 +1,18 @@
-# Miniclip FB Instant SDK
-This is a companion sdk to be used in Facebook Instant Games published by Miniclip.
+---
+layout: 'guide'
+title: 'Getting Started'
+menuOrder: 0
+---
 
-## Getting Started
-Check the documentation in https://miniclip.github.io/fbi-sdk
-
-## Quick Start
+# Getting Started
 
 If you have [npm installed](https://www.npmjs.com/get-npm), include MCInstant in your project with the following command.
 ```bash
 npm install --save https://github.com/miniclip/fbi-sdk.git
 ```
-
-
+ 
+### Create a new MCInstant
+ 
 ```typescript
 import { MCInstant } from "@miniclip/instant";
 
