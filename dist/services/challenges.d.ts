@@ -1,8 +1,15 @@
 import { Challenge } from "../models";
 import { BaseService } from "../core/services";
+import { CurrencyAmount } from "./currencies";
+import { ChallengeType } from "src/models/challenge";
 declare type CreatePayload = {
     score?: number;
     duration?: number;
+};
+export declare type ChallengeEndedPayload = {
+    challenge: ChallengeType;
+    won: boolean;
+    reward: CurrencyAmount;
 };
 export declare class ChallengeService extends BaseService {
     private wallet;

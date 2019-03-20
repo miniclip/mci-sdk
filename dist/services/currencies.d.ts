@@ -1,7 +1,7 @@
 import { BaseService } from "../core/services";
 export declare type CurrencyAmount = {
     value: number;
-    currency?: string;
+    currency: string;
 };
 export declare class CurrencyService extends BaseService {
     private _currencies;

@@ -5,12 +5,15 @@ export declare type ChallengeType = {
     score: {
         [id: string]: number;
     };
+    challenge_id?: string;
     context_id: string;
     end_ts: number;
+    updated_ts: number;
     version?: number;
 };
 export declare class Challenge {
     private _session;
+    private _network;
     private _currentPlayer;
     private _originalScore;
     private _data;
@@ -31,10 +34,12 @@ export declare class Challenge {
     readonly duration: number;
     readonly time_left: number;
     readonly expired: boolean;
+    readonly updated_at: number;
     readonly contextId: string;
+    readonly challengeId: string | undefined;
     readonly data: ChallengeType;
     getShareToken(): string;
     loadShareToken(token: string | any): boolean;
-    save(): boolean;
+    save(): Promise<boolean>;
     toJSON(): string;
 }
