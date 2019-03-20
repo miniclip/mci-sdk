@@ -164,11 +164,11 @@ export class ChallengeService extends BaseService{
 
     // make request
     const playerId = FBInstant.player.getID();
-    const challengeId = challenge.contextId;
+    const challengeId = challenge.challengeId;
     const url = "/players/" + playerId + "/challenges/" + challengeId;
 
     try {
-      const response = await this.network.put(url, {}, { headers: { 'Content-Type': 'application/json' }});
+      const response = await this.network.delete(url);
       const status = response.status;
       if (status < 200 || status > 299) return true;
       //console.log("--Consumed challenge", response);

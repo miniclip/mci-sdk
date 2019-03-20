@@ -5,6 +5,7 @@ import DIContainer from "../utils/dicontainer";
 import { Modules } from "../services";
 import { SessionService } from "../services/session";
 import { Challenge } from "./challenge";
+import { DummyNetworkManager } from "../core/network";
 
 const now = Math.floor(new Date().getTime() / 1000);
 
@@ -22,6 +23,7 @@ const sample_valid_challenge = {
 describe("ChallengeModel", function(){
   const container: DIContainer = new DIContainer();
   container.bind(Modules.SESSION, new SessionService());
+  container.bind(Modules.NETWORK, new DummyNetworkManager());
 
   it("constructor", () => {
     const challenge = new Challenge(container, "1");
@@ -59,6 +61,8 @@ describe("ChallengeModel", function(){
     let new_challenge = new Challenge(container, "1");
     new_challenge.loadShareToken(token);
 
+    console.log(new_challenge.data);
+    console.log(original_data);
     expect(new_challenge.data).to.be.deep.equal(original_data);
   })
 });

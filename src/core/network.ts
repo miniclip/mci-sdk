@@ -105,11 +105,24 @@ export class NetworkManager implements INetworkManager {
         })
 
         this.axios.interceptors.request.use(config => {
-            if (this.store.get(AUTH_TOKEY_KEY)){
-                config.headers
-                config.headers[HEADER_AUTH_TOKEN] = this.store.get(AUTH_TOKEY_KEY);
-            }
-            return config;
+            config.headers['Content-Type'] = 'application/json';
+            
+            return new Promise((resolve) => {
+                if (this.store.get(AUTH_TOKEY_KEY)){
+                    config.headers[HEADER_AUTH_TOKEN] = this.store.get(AUTH_TOKEY_KEY);
+
+                    resolve(config);
+                } else {
+                    this.getSignedMessage().then((result) => {
+                        config.headers[HEADER_FB_SIGNATURE] = result.getSignature();
+
+                        resolve(config);
+                    }).catch(()=>{
+                        resolve(config);
+                    });
+                }
+            })
+            
         })
 
         this.axios.interceptors.response.use( (response:AxiosResponse) => {
