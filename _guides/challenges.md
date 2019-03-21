@@ -21,14 +21,15 @@ const duration = 60*60*24*5; // 5 days challenge
 mci.challenges.create({ duration  })  
     .then((challenge) => {
         challenge.setScore(10);
+        challenge.save().then(() => {
+          //FBInstant.updateAsync(...)
+        })
 
-        // FBInstant.updateAsync(...)
     })
 ```
 
-Challenges are created using the [setSessionData](https://developers.facebook.com/docs/games/instant-games/sdk/fbinstant6.2) mechanism. Only when the user changes context or quits the game, will the data be sent to the backend.
-
-Afterwards, the challenge needs to be sent to the oponnent. For that, use the `getShareToken()` method in the `challenge` object to retrieve an identifier that can be sent to the other player.
+Afterwards the challenge is saved, it needs to be sent to the opponent. For that, use the `getShareToken()` method in the `challenge` object to retrieve an identifier that can be sent to the other player.
+`getShareToken()` must be called after saving the challenge, otherwise it might not include the most up to date info.
 
 ``` javascript
 let message = {
