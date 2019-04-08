@@ -6,11 +6,19 @@ import { Challenge } from "../models";
 import { IDataStore } from "../store";
 import { BaseService } from "../core/services";
 import { EVENT_CHALLENGE_ENDED } from "../events";
+import { CurrencyAmount } from "./currencies";
+import { ChallengeType } from "src/models/challenge";
 
 type CreatePayload = {
   score?: number;
   duration?: number;
 };
+
+export type ChallengeEndedPayload = {
+  challenge: ChallengeType;
+  won: boolean;
+  reward: CurrencyAmount
+}
 
 export class ChallengeService extends BaseService{
   private wallet: WalletService;
@@ -98,14 +106,35 @@ export class ChallengeService extends BaseService{
     return challenges.find(c => c.contextId == context_id);
   }
 
+   /**
+   * Get a challenge by challenge id.
+   * @param context_id
+   */
+  public async getByChallengeId(
+    challengeId: string
+  ): Promise<Challenge | undefined> {
+    let challenges = await this.getAll();
+
+    return challenges.find(c => c.challengeId == challengeId);
+  }
+
+  /**
+   * Recreates a challenge from the shared token
+   * @param token 
+   */
   public async getFromToken(token:string):Promise<Challenge|undefined> {
     return new Promise(async (resolve)=>{
       let challenge = this.create();
       if (!challenge.loadShareToken(token)){
         resolve(undefined);
       }
+      
+      if (challenge.challengeId == undefined) {
+        resolve(challenge)
+        return;
+      }
 
-      let previous = await this.getByContext(challenge.contextId);
+      let previous = await this.getByChallengeId(challenge.challengeId);
 
       resolve(previous || challenge);
     });
@@ -156,24 +185,25 @@ export class ChallengeService extends BaseService{
 
     // make request
     const playerId = FBInstant.player.getID();
-    const challengeId = challenge.contextId;
+    const challengeId = challenge.challengeId;
     const url = "/players/" + playerId + "/challenges/" + challengeId;
 
     try {
-      const response = await this.network.put(url, {}, { headers: { 'Content-Type': 'application/json' }});
+      const response = await this.network.delete(url);
       const status = response.status;
       if (status < 200 || status > 299) return true;
       //console.log("--Consumed challenge", response);
 
       // add to wallet
-      let reward = this.store.get("challenge_reward",  null);
+      let reward:CurrencyAmount = this.store.get("challenge_reward",  null);
       
       const winner = this.hasPlayerWon(challenge);
       if (reward != null && winner){
         this.wallet.addBalance(reward.value, reward.currency);
       }
 
-      this.events.emit(EVENT_CHALLENGE_ENDED, { challenge: challenge.data, won: winner, reward });
+      let payload: ChallengeEndedPayload = { challenge: challenge.data, won: winner, reward };
+      this.events.emit(EVENT_CHALLENGE_ENDED, payload);
 
       return true;
     } catch (error) {

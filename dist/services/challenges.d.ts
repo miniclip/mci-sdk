@@ -1,8 +1,15 @@
 import { Challenge } from "../models";
 import { BaseService } from "../core/services";
+import { CurrencyAmount } from "./currencies";
+import { ChallengeType } from "src/models/challenge";
 declare type CreatePayload = {
     score?: number;
     duration?: number;
+};
+export declare type ChallengeEndedPayload = {
+    challenge: ChallengeType;
+    won: boolean;
+    reward: CurrencyAmount;
 };
 export declare class ChallengeService extends BaseService {
     private wallet;
@@ -17,6 +24,7 @@ export declare class ChallengeService extends BaseService {
     updateList(): Promise<Challenge[]>;
     getAll(): Promise<Challenge[]>;
     getByContext(context_id: string): Promise<Challenge | undefined>;
+    getByChallengeId(challengeId: string): Promise<Challenge | undefined>;
     getFromToken(token: string): Promise<Challenge | undefined>;
     create({ score, duration }?: CreatePayload): Challenge;
     private hasPlayerWon;

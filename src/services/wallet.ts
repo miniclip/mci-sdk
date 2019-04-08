@@ -3,7 +3,7 @@ import { Modules } from ".";
 import { InstantStorage } from "../utils/instant-storage";
 import { CurrencyService } from "./currencies";
 import { BaseService } from "../core/services";
-import { WALLET_BALANCE_UPDATED } from "../events";
+import { EVENT_WALLET_BALANCE_UPDATED } from "../events";
 
 const WALLET_STORAGE_KEY = "_wallet";
 
@@ -70,7 +70,7 @@ export class WalletService extends BaseService {
             this._cloud.set(WALLET_STORAGE_KEY, balance)
                 .then(this._cloud.flush)
                 .then((success) => {
-                    this.events.emit(WALLET_BALANCE_UPDATED)
+                    this.events.emit(EVENT_WALLET_BALANCE_UPDATED)
                     resolve(success)
                 });
         });
@@ -81,6 +81,7 @@ export class WalletService extends BaseService {
         try {
             await this.setBalance(currency, value);
         } catch (error){
+            console.error(error);
             return {};
         }
         return await this.getBalance([currency]);
@@ -120,11 +121,31 @@ export class PublicWallet {
         this.wallet = wallet;
     }
 
+    /**
+     * Fetch the balance 
+     * @param filter 
+     */
     public getBalance(filter?: Array<string>) {
         return this.wallet.getBalance(filter);
     }
 
-    public addBalance(value:number, currency:string){
-        return this.wallet.addBalance(value, currency);
+    /**
+     * Add a specified amount to the specified currency wallet
+     * @deprecated Will be removed in the near future
+     * @param amount 
+     * @param currency Name of the currency to add to
+     */
+    public addBalance(amount:number, currency:string){
+        return this.wallet.addBalance(amount, currency);
+    }
+
+    /**
+     * Sets the specified $currency wallet to the specified $amount
+     * @deprecated Will be removed in the near future
+     * @param amount
+     * @param currency Name of the currency to set
+     */
+    public updateBalance(amount:number, currency:string){
+        return this.wallet.updateBalance(amount, currency);
     }
 }

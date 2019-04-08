@@ -1,6 +1,6 @@
 {
   "name": "@miniclip/instant",
-  "version": "0.1.2",
+  "version": "0.1.3",
   "description": "Miniclip FB Instant Games SDK",
   "main": "dist/mcinstant.js",
   "typings": "./dist/index.d.ts",
@@ -15,9 +15,9 @@
     "build": "npm run clean && tsc && npm run clean:js && webpack --config webpack.js",
     "clean": "shx rm -rf ./dist ./_bundles",
     "clean:js": "shx rm -rf ./dist/*.js ./dist/**/*.js",
-    "clean:docs": "shx rm -rf ./docs",
-    "docs": "npm run clean:docs && typedoc --options ./typedoc.js src && touch docs/.nojekyll",
-    "deploy-docs": "git subtree push --prefix docs/ origin gh-pages"
+    "clean:docs": "shx rm -rf ./docs/api",
+    "docs": "npm run clean:docs && typedoc --options ./typedoc.js src",
+    "deploy-docs": "git subtree push --prefix docs/ github gh-pages"
   },
   "repository": {
     "type": "git",

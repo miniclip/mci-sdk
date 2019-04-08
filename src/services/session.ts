@@ -49,7 +49,11 @@ export class SessionService extends BaseService {
       ...this.publicState
     };
     base[SessionService.PAYLOAD_NS] = this.internalState;
-    base["_mc"] = { timezone_offset: this.timezoneOffset };
+
+    const name = FBInstant.player.getName();
+    const avatar = FBInstant.player.getPhoto();
+
+    base["_mc"] = { timezone_offset: this.timezoneOffset, name, avatar };
     FBInstant.setSessionData(base);
   }
 

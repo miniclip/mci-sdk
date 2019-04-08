@@ -1,0 +1,33 @@
+title: MCInstant
+description: > # this means to ignore newlines until "baseurl:"
+  Companion sdk to be used in Facebook Instant Games published by Miniclip.
+baseurl: "/fbi-sdk" # the subpath of your site, e.g. /blog
+url: "https://miniclip.github.io/fbi-sdk" # the base hostname & protocol for your site
+
+collections:
+  guides:
+    permalink: /guides/:title/
+    output: true
+
+# Build settings
+markdown: kramdown
+highlighter: rouge
+
+kramdown:
+  input: GFM
+  syntax_highlighter: rouge
+
+plugins:
+  - jekyll-redirect-from
+
+sass:
+  style: compressed
+
+include:
+  - "*.html" # Needed to include files that start with underscore
+
+exclude:
+  - images/edit
+  - Gemfile
+  - Gemfile.lock
+  - README.md

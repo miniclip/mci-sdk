@@ -1,18 +1,23 @@
 import { SessionService } from "../services/session";
 import DIContainer from "../utils/dicontainer";
 import { Modules } from "../services";
+import { INetworkManager } from "src/core/network";
+import { AxiosPromise } from "axios";
 
 export type ChallengeType = {
   type: string;
   duration: number;
   score: { [id: string]: number };
+  challenge_id?: string;
   context_id: string;
   end_ts: number;
+  updated_ts: number;
   version?:number;
 };
 
 export class Challenge {
   private _session: SessionService;
+  private _network: INetworkManager;
   private _currentPlayer: string = "";
 
   private _originalScore: number = 0;
@@ -23,25 +28,30 @@ export class Challenge {
     duration: 60 * 60 * 24 * 7, // default = 60 * 60 * 24 * 7 = 1week
     context_id: "",
     end_ts: -1,
+    updated_ts: -1,
     version: 1
   };
 
   constructor(container: DIContainer, current_player_id: string) {
     this._session = container.get(Modules.SESSION);
+    this._network = container.get(Modules.NETWORK);
     this._currentPlayer = current_player_id;
   }
 
   public parse(data: any): Challenge | undefined {
     if (data == null) return undefined;
 
-    let { end_ts, context_id } = data;
+    let { end_ts, updated_ts, context_id, challenge_id} = data;
     if (context_id == null) return undefined;
 
+    
     let scores = "score" in data ? data["score"] : {};
     this._data.context_id = context_id || "";
     this._data.score = scores;
     this._data.end_ts = end_ts || -1;
-
+    this._data.updated_ts = updated_ts || -1;
+    this._data.challenge_id = challenge_id;
+    
     this._originalScore = this.getPlayerScore();
 
     return this;
@@ -160,10 +170,20 @@ export class Challenge {
   }
 
   /**
+   * Timestamp of when this challenge data was updated
+   */
+  get updated_at(){
+    return this._data.updated_ts;
+  }
+  /**
    * Returns the context id the challenge refers to.
    */
   get contextId(): string {
     return this._data.context_id;
+  }
+
+  get challengeId(): string|undefined {
+    return this._data.challenge_id;
   }
 
   get data() {
@@ -189,16 +209,17 @@ export class Challenge {
     }
     return true;
   }
+
   /**
    *  Saves the challenge information in current session data
    *  The challenge is only commit on context switching or leaving the application.
    */
-  save() {
+  async save() {
     let type = this._data.type;
     let duration = this._data.duration;
-    /*if (this._data.end_ts == undefined){
-      this._data.end_ts = Math.floor(new Date().getTime() / 1000) + duration;
-    }*/
+    let context_id = this.contextId;
+    let timezone_offset = new Date().getTimezoneOffset();
+    
     let score = this.getPlayerScore();
     if (score == null) {
       console.error("The score for current player hasn't been set.");
@@ -209,7 +230,30 @@ export class Challenge {
       score -= this._originalScore;
     }
 
-    this._session.setData({ type, duration, score });
+    const playerId = FBInstant.player.getID();
+    const challengeData = { context_id, score, duration, timezone_offset};
+
+    try {
+      var result:any;
+      if (!this.challengeId){
+        // create
+        result = await this._network.post(`/players/${playerId}/challenges`, challengeData);
+      } else {
+        // update
+        result = await this._network.put(`/players/${playerId}/challenges/${this.challengeId}`, challengeData);
+      }
+
+      this.parse(result.data);
+
+      this._session.setData({ 
+        type, duration, score, 
+        challengeId: this.challengeId,
+      });
+      
+    } catch (err){
+      return false;
+    }
+
     return true;
   }
 

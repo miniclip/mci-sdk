@@ -27,6 +27,16 @@ declare namespace FBInstant {
         getID(): string;
 
         /**
+         * The player's localized display name.
+         */
+        getName(): string;
+
+        /** 
+         * A url to the player's public profile photo 
+         **/
+        getPhoto(): string;
+        
+        /**
          * Fetch the player's unique identifier along with a signature that verifies that the identifier indeed comes from Facebook without being tampered with
          */
         getSignedPlayerInfoAsync(requestPayload?: string): Promise<SignedPlayerInfo>;
