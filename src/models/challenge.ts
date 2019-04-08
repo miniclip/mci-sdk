@@ -244,6 +244,12 @@ export class Challenge {
       }
 
       this.parse(result.data);
+
+      this._session.setData({ 
+        type, duration, score, 
+        challengeId: this.challengeId,
+      });
+      
     } catch (err){
       return false;
     }
