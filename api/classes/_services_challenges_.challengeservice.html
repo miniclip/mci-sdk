@@ -107,6 +107,7 @@
 								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-overwrite"><a href="_services_challenges_.challengeservice.html#_boot" class="tsd-kind-icon">_boot</a></li>
 								<li class="tsd-kind-method tsd-parent-kind-class"><a href="_services_challenges_.challengeservice.html#create" class="tsd-kind-icon">create</a></li>
 								<li class="tsd-kind-method tsd-parent-kind-class"><a href="_services_challenges_.challengeservice.html#getall" class="tsd-kind-icon">get<wbr>All</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class"><a href="_services_challenges_.challengeservice.html#getbychallengeid" class="tsd-kind-icon">get<wbr>ByChallenge<wbr>Id</a></li>
 								<li class="tsd-kind-method tsd-parent-kind-class"><a href="_services_challenges_.challengeservice.html#getbycontext" class="tsd-kind-icon">get<wbr>ByContext</a></li>
 								<li class="tsd-kind-method tsd-parent-kind-class"><a href="_services_challenges_.challengeservice.html#getfromtoken" class="tsd-kind-icon">get<wbr>From<wbr>Token</a></li>
 								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-inherited"><a href="_services_challenges_.challengeservice.html#setcontainer" class="tsd-kind-icon">set<wbr>Container</a></li>
@@ -129,7 +130,7 @@
 							<aside class="tsd-sources">
 								<p>Overrides BaseService.__constructor</p>
 								<ul>
-									<li>Defined in <a href="https://github.com/miniclip/fbi-sdk/blob/7997c9e/src/services/challenges.ts#L31">services/challenges.ts:31</a></li>
+									<li>Defined in services/challenges.ts:31</li>
 								</ul>
 							</aside>
 							<h4 class="tsd-returns-title">Returns <a href="_services_challenges_.challengeservice.html" class="tsd-signature-type">ChallengeService</a></h4>
@@ -146,7 +147,7 @@
 					<aside class="tsd-sources">
 						<p>Inherited from BaseService.container</p>
 						<ul>
-							<li>Defined in <a href="https://github.com/miniclip/fbi-sdk/blob/7997c9e/src/core/services.ts#L4">core/services.ts:4</a></li>
+							<li>Defined in core/services.ts:4</li>
 						</ul>
 					</aside>
 				</section>
@@ -156,7 +157,7 @@
 					<div class="tsd-signature tsd-kind-icon">initial<wbr>Fetch<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">void</span><span class="tsd-signature-symbol">&gt;</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/miniclip/fbi-sdk/blob/7997c9e/src/services/challenges.ts#L30">services/challenges.ts:30</a></li>
+							<li>Defined in services/challenges.ts:30</li>
 						</ul>
 					</aside>
 				</section>
@@ -174,7 +175,7 @@
 							<aside class="tsd-sources">
 								<p>Inherited from BaseService.events</p>
 								<ul>
-									<li>Defined in <a href="https://github.com/miniclip/fbi-sdk/blob/7997c9e/src/core/services.ts#L15">core/services.ts:15</a></li>
+									<li>Defined in core/services.ts:15</li>
 								</ul>
 							</aside>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">EventEmitter</span></h4>
@@ -195,7 +196,7 @@
 							<aside class="tsd-sources">
 								<p>Overrides BaseService._boot</p>
 								<ul>
-									<li>Defined in <a href="https://github.com/miniclip/fbi-sdk/blob/7997c9e/src/services/challenges.ts#L41">services/challenges.ts:41</a></li>
+									<li>Defined in services/challenges.ts:41</li>
 								</ul>
 							</aside>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4>
@@ -212,7 +213,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/miniclip/fbi-sdk/blob/7997c9e/src/services/challenges.ts#L127">services/challenges.ts:127</a></li>
+									<li>Defined in services/challenges.ts:148</li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -243,7 +244,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/miniclip/fbi-sdk/blob/7997c9e/src/services/challenges.ts#L85">services/challenges.ts:85</a></li>
+									<li>Defined in services/challenges.ts:85</li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -252,6 +253,34 @@
 								</div>
 							</div>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><a href="_models_challenge_.challenge.html" class="tsd-signature-type">Challenge</a><span class="tsd-signature-symbol">[]</span><span class="tsd-signature-symbol">&gt;</span></h4>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class">
+					<a name="getbychallengeid" class="tsd-anchor"></a>
+					<h3>get<wbr>ByChallenge<wbr>Id</h3>
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
+						<li class="tsd-signature tsd-kind-icon">get<wbr>ByChallenge<wbr>Id<span class="tsd-signature-symbol">(</span>challengeId<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><a href="_models_challenge_.challenge.html" class="tsd-signature-type">Challenge</a><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">undefined</span><span class="tsd-signature-symbol">&gt;</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in services/challenges.ts:113</li>
+								</ul>
+							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Get a challenge by challenge id.</p>
+								</div>
+							</div>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>challengeId: <span class="tsd-signature-type">string</span></h5>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><a href="_models_challenge_.challenge.html" class="tsd-signature-type">Challenge</a><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">undefined</span><span class="tsd-signature-symbol">&gt;</span></h4>
 						</li>
 					</ul>
 				</section>
@@ -265,7 +294,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/miniclip/fbi-sdk/blob/7997c9e/src/services/challenges.ts#L101">services/challenges.ts:101</a></li>
+									<li>Defined in services/challenges.ts:101</li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -295,13 +324,20 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/miniclip/fbi-sdk/blob/7997c9e/src/services/challenges.ts#L109">services/challenges.ts:109</a></li>
+									<li>Defined in services/challenges.ts:125</li>
 								</ul>
 							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Recreates a challenge from the shared token</p>
+								</div>
+							</div>
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
 								<li>
 									<h5>token: <span class="tsd-signature-type">string</span></h5>
+									<div class="tsd-comment tsd-typography">
+									</div>
 								</li>
 							</ul>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><a href="_models_challenge_.challenge.html" class="tsd-signature-type">Challenge</a><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">undefined</span><span class="tsd-signature-symbol">&gt;</span></h4>
@@ -319,7 +355,7 @@
 							<aside class="tsd-sources">
 								<p>Inherited from BaseService.setContainer</p>
 								<ul>
-									<li>Defined in <a href="https://github.com/miniclip/fbi-sdk/blob/7997c9e/src/core/services.ts#L10">core/services.ts:10</a></li>
+									<li>Defined in core/services.ts:10</li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -342,7 +378,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/miniclip/fbi-sdk/blob/7997c9e/src/services/challenges.ts#L47">services/challenges.ts:47</a></li>
+									<li>Defined in services/challenges.ts:47</li>
 								</ul>
 							</aside>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><a href="_models_challenge_.challenge.html" class="tsd-signature-type">Challenge</a><span class="tsd-signature-symbol">[]</span><span class="tsd-signature-symbol">&gt;</span></h4>
@@ -410,6 +446,9 @@
 							</li>
 							<li class=" tsd-kind-method tsd-parent-kind-class">
 								<a href="_services_challenges_.challengeservice.html#getall" class="tsd-kind-icon">get<wbr>All</a>
+							</li>
+							<li class=" tsd-kind-method tsd-parent-kind-class">
+								<a href="_services_challenges_.challengeservice.html#getbychallengeid" class="tsd-kind-icon">get<wbr>ByChallenge<wbr>Id</a>
 							</li>
 							<li class=" tsd-kind-method tsd-parent-kind-class">
 								<a href="_services_challenges_.challengeservice.html#getbycontext" class="tsd-kind-icon">get<wbr>ByContext</a>
