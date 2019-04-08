@@ -106,14 +106,35 @@ export class ChallengeService extends BaseService{
     return challenges.find(c => c.contextId == context_id);
   }
 
+   /**
+   * Get a challenge by challenge id.
+   * @param context_id
+   */
+  public async getByChallengeId(
+    challengeId: string
+  ): Promise<Challenge | undefined> {
+    let challenges = await this.getAll();
+
+    return challenges.find(c => c.challengeId == challengeId);
+  }
+
+  /**
+   * Recreates a challenge from the shared token
+   * @param token 
+   */
   public async getFromToken(token:string):Promise<Challenge|undefined> {
     return new Promise(async (resolve)=>{
       let challenge = this.create();
       if (!challenge.loadShareToken(token)){
         resolve(undefined);
       }
+      
+      if (challenge.challengeId == undefined) {
+        resolve(challenge)
+        return;
+      }
 
-      let previous = await this.getByContext(challenge.contextId);
+      let previous = await this.getByChallengeId(challenge.challengeId);
 
       resolve(previous || challenge);
     });
