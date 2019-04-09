@@ -21,7 +21,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git@github.com:miniclip/fbi-sdk.git"
+    "url": "git@github.com:miniclip/mci-sdk.git"
   },
   "author": "Miniclip",
   "private": true,
