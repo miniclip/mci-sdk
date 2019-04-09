@@ -8,7 +8,7 @@ menuOrder: 0
 
 If you have [npm installed](https://www.npmjs.com/get-npm), include MCInstant in your project with the following command.
 ```bash
-npm install --save https://github.com/miniclip/fbi-sdk.git
+npm install --save https://github.com/miniclip/mci-sdk.git
 ```
  
 ### Initialize the SDK
