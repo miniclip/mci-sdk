@@ -1,10 +1,11 @@
 {
     "compilerOptions": {
       "declaration": true,
-      "removeComments": true,
       "target": "es2015",
       "module": "commonjs",
       "moduleResolution": "node",
+      "removeComments": true,
+      
       "noImplicitAny": true,
       "noImplicitReturns": true,
       "noImplicitThis": true,
@@ -12,12 +13,12 @@
       "noUnusedParameters": false,
       "strictNullChecks": true,
       "strictFunctionTypes": false,
-      
       "noFallthroughCasesInSwitch": true,
       "preserveConstEnums": true,
       "suppressImplicitAnyIndexErrors": true,
+
       "sourceMap": false,
-      "typeRoots" : ["./node_modules/@types", "./types"],
+      "types" : [],
       "baseUrl": ".",
       "outDir": "dist",
       "lib": [
@@ -33,6 +34,7 @@
       "types/**/*.d.ts"
     ],
     "exclude": [
+      "node_modules",
       "src/**/*.spec.js",
       "src/**/*.js",
       "dist"
