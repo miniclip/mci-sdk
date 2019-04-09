@@ -2,13 +2,13 @@
 This is a companion sdk to be used in Facebook Instant Games published by Miniclip.
 
 ## Getting Started
-Check the documentation in https://miniclip.github.io/fbi-sdk
+Check the documentation in https://miniclip.github.io/mci-sdk
 
 ## Quick Start
 
 If you have [npm installed](https://www.npmjs.com/get-npm), include MCInstant in your project with the following command.
 ```bash
-npm install --save https://github.com/miniclip/fbi-sdk.git
+npm install --save https://github.com/miniclip/mci-sdk.git
 ```
 
 
