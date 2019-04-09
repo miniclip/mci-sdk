@@ -10,14 +10,19 @@ export declare class MCInstant {
     private logger;
     wallet: PublicWallet;
     challenges: ChallengeService;
-    constructor({ endpoint, logLevel, app_id, challenge_reward, currencies }?: MCInstantOptions);
+    constructor({ environment, logLevel, app_id, challenge_reward, currencies }: MCInstantOptions);
     readonly events: import("events").EventEmitter;
+    private getEndpointUrl;
+}
+export declare enum MCIEnvironment {
+    PRODUCTION = "production",
+    SANDBOX = "sandbox"
 }
 export interface MCInstantOptions {
-    endpoint?: string;
+    environment?: MCIEnvironment;
+    app_id: any;
     logger?: any;
     logLevel?: LogLevel;
-    app_id?: number;
     challenge_reward?: CurrencyAmount;
     currencies?: string[];
 }
