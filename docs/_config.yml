@@ -1,8 +1,8 @@
 title: MCInstant
 description: > # this means to ignore newlines until "baseurl:"
   Companion sdk to be used in Facebook Instant Games published by Miniclip.
-baseurl: "/fbi-sdk" # the subpath of your site, e.g. /blog
-url: "https://miniclip.github.io/fbi-sdk" # the base hostname & protocol for your site
+baseurl: "/mci-sdk" # the subpath of your site, e.g. /blog
+url: "https://miniclip.github.io/mci-sdk" # the base hostname & protocol for your site
 
 collections:
   guides:
