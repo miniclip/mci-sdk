@@ -1,7 +1,7 @@
 import { SessionService } from "../services/session";
 import DIContainer from "../utils/dicontainer";
 import { Modules } from "../services";
-import { INetworkManager } from "src/core/network";
+import { INetworkManager } from "../core/network";
 import { AxiosPromise } from "axios";
 
 export type ChallengeType = {

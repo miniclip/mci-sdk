@@ -7,7 +7,7 @@ import { IDataStore } from "../store";
 import { BaseService } from "../core/services";
 import { EVENT_CHALLENGE_ENDED } from "../events";
 import { CurrencyAmount } from "./currencies";
-import { ChallengeType } from "src/models/challenge";
+import { ChallengeType } from "../models/challenge";
 
 type CreatePayload = {
   score?: number;

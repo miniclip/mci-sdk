@@ -19,12 +19,12 @@ export class MCInstant {
   public challenges: ChallengeService;
 
   constructor({
-    endpoint = "https://fbi-webhooks-server-dev.miniclippt.com/apps/",
+    environment = MCIEnvironment.PRODUCTION,
     logLevel = LogLevel.INFO,
-    app_id = 0,
+    app_id = "",
     challenge_reward = { value: 100, currency: "points" },
     currencies = [ "points" ]
-  }: MCInstantOptions = {}) {
+  }: MCInstantOptions) {
     this.di = new DIContainer();
 
     this.logger = getLogger(MCInstant.loggerName);
@@ -38,7 +38,7 @@ export class MCInstant {
     _store.set("challenge_reward", challenge_reward);
 
     const network = new NetworkManager({
-      endpointURL: endpoint + app_id,
+      endpointURL: this.getEndpointUrl(environment, app_id),
       container: this.di
     });
     this.di.bind(Modules.NETWORK, network);
@@ -58,13 +58,31 @@ export class MCInstant {
   get events() {
     return this.di.events;
   }
+
+  private getEndpointUrl(environment:string, app_id:string = ""){
+    var baseurl = "";
+    switch(environment){
+      case "development": baseurl = "fbi-ws-dev"; break;
+      case "sandbox": baseurl = "fbi-ws-sandbox"; break;
+      default:
+        baseurl = "prod-mci-ws";
+    }
+    return `https://${baseurl}.miniclippt.com/apps/${app_id}`;
+  }
+}
+
+export enum MCIEnvironment {
+  PRODUCTION ="production",
+  SANDBOX = "sandbox"
 }
 
 export interface MCInstantOptions {
-  endpoint?: string;
+  environment?: MCIEnvironment;
+  app_id: any;
+  
   logger?: any;
   logLevel?: LogLevel;
-  app_id?: number;
+  
   challenge_reward?: CurrencyAmount;
   currencies?: string[]
 }

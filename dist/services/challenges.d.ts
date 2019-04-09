@@ -1,7 +1,7 @@
 import { Challenge } from "../models";
 import { BaseService } from "../core/services";
 import { CurrencyAmount } from "./currencies";
-import { ChallengeType } from "src/models/challenge";
+import { ChallengeType } from "../models/challenge";
 declare type CreatePayload = {
     score?: number;
     duration?: number;
