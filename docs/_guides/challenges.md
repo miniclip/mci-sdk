@@ -18,14 +18,11 @@ mci.challenges.getAll().then((list) => {
 
 ```typescript
 const duration = 60*60*24*5; // 5 days challenge
-mci.challenges.create({ duration  })  
-    .then((challenge) => {
-        challenge.setScore(10);
-        challenge.save().then(() => {
-          //FBInstant.updateAsync(...)
-        })
-
-    })
+let challenge = mci.challenges.create({ duration  });
+challenge.setScore(10);
+challenge.save().then(() => {
+  //FBInstant.updateAsync(...)
+})
 ```
 
 Afterwards the challenge is saved, it needs to be sent to the opponent. For that, use the `getShareToken()` method in the `challenge` object to retrieve an identifier that can be sent to the other player.
