@@ -17,6 +17,7 @@
     "clean:js": "shx rm -rf ./dist/*.js ./dist/**/*.js",
     "clean:docs": "shx rm -rf ./docs/api",
     "docs": "npm run clean:docs && typedoc --options ./typedoc.js src",
+    "serve-docs": "cd docs && bundle exec jekyll serve",
     "deploy-docs": "git subtree push --prefix docs/ github gh-pages"
   },
   "repository": {
