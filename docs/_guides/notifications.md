@@ -1,0 +1,38 @@
+---
+layout: 'guide'
+title: 'Notifications'
+menuOrder: 3
+---
+
+# Notifications
+
+In MCI Backoffice you are able to configure a series of notification types and their templates.
+
+## First Time
+This is a message sent the first time the user plays. A bit after leaving the game, the player will receive this notification.
+
+## Scheduled
+Use this notifications to remind your players to return to the game. They are automatically scheduled everytime the player leaves the game and reset once they come back.
+
+For example if you have this configuration:
+
+![Scheduled Notification Config]({{ site.baseurl }}/images/notifications/scheduled_config.png)
+
+Two messages will be scheduled after the user leaves the game.
+ 1. The first will be delivered 1 day after he left, at 8AM.
+ 2. The second is scheduled for 2 day's after he left, at 8PM.
+
+If at any point in time, the user comes back the game, any scheduled message will be reset and rescheduled again.
+
+## Challenges
+
+### Reminders
+Everytime a challenge is created between two players this challenge reminders are scheduled.
+Each notification is associated with an offset, which represents at what point in the challenge duration it should be sent.
+
+### End Notifications
+There are three types of challenge end notificatons, and all are sent at the end of the challenge.
+
+ * **Win Notification** --  Sent to the player that wins.
+ * **Lose Notification** -- Sent to the player that loses.
+ * **Draw Notification** -- Sent to both players in case of a draw.
