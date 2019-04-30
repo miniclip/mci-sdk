@@ -1,5 +1,4 @@
 import { BaseService } from "../core/services";
-import { isArray } from "util";
 
 export type CurrencyAmount = {
     value:number;
@@ -23,7 +22,7 @@ export class CurrencyService extends BaseService{
     }
     
     public addCurrencies(name:string[]){
-        if (isArray(name)){
+        if (Array.isArray(name)){
             name.forEach((currency) => {
                 this.addCurrency(currency);
             })
