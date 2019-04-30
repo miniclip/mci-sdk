@@ -79,6 +79,11 @@ export class Challenge {
     return this;
   }
 
+  setChallengeId(challenge_id: string){
+    this._data.challenge_id = challenge_id;
+    return this;
+  }
+
   hasScore(player_id: string | undefined) {
     if (player_id == undefined) return false;
     

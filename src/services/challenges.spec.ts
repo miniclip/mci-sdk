@@ -19,16 +19,19 @@ const dummyData_1 = [
   {
     end_ts: now + 1000,
     score: { "2212873545391530": 5 },
-    context_id: "context_1"
+    context_id: "context_1",
+    challenge_id: "c1"
   },
   {
     end_ts: now + 1000,
     score: { "2212873545391530": 5, "2212873545391531": 10 },
-    context_id: "context_2"
+    context_id: "context_2",
+    challenge_id: "c2"
   },
   {
     score: { "1": 25, "2212873545391531": 10 },
-    context_id: "context_3"
+    context_id: "context_3",
+    challenge_id: "c3"
   }
 ];
 
@@ -149,7 +152,7 @@ describe("ChallengeService", function() {
     });
   });
 
-  it("should return list challenge if available", () => {
+  it("should return challenge from list if available", () => {
     network.addResponse(200, dummyData_1);
 
     const challengeService = new ChallengeService();
@@ -157,7 +160,7 @@ describe("ChallengeService", function() {
 
     let c1 = new Challenge(container, "1")
       .setScore(20)
-      .setContext("context_3")
+      .setChallengeId("c3")
       .getShareToken();
 
     challengeService.getFromToken(c1).then((challenge) => {
