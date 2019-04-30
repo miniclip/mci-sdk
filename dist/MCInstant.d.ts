@@ -5,6 +5,7 @@ import { ChallengeService } from "./services/challenges";
 import { CurrencyAmount } from "./services/currencies";
 export declare class MCInstant {
     private static loggerName;
+    static version: string;
     di: DIContainer;
     private logger;
     wallet: PublicWallet;
