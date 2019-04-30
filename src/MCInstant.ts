@@ -9,8 +9,11 @@ import { Store } from "./store";
 import { SessionService } from "./services/session";
 import { InstantStorage } from "./utils/instant-storage";
 
+declare var VERSION:string;
+
 export class MCInstant {
   private static loggerName = "mc:instant";
+  public static version = VERSION;
 
   public di: DIContainer;
   private logger: Logger;
