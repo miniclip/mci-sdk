@@ -22,6 +22,7 @@ export declare class Challenge {
     setScore(score: number): this;
     setDuration(duration: number): this;
     setContext(context_id: string): this;
+    setChallengeId(challenge_id: string): this;
     hasScore(player_id: string | undefined): boolean;
     getScore(player_id: string | undefined): number;
     getPlayerId(): string;
@@ -41,5 +42,6 @@ export declare class Challenge {
     getShareToken(): string;
     loadShareToken(token: string | any): boolean;
     save(): Promise<boolean>;
+    delete(): Promise<boolean>;
     toJSON(): string;
 }

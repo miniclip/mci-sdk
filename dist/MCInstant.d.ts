@@ -1,4 +1,3 @@
-/// <reference types="node" />
 import { LogLevel } from "./logger";
 import { PublicWallet } from "./services/wallet";
 import DIContainer from "./utils/dicontainer";
@@ -11,7 +10,7 @@ export declare class MCInstant {
     wallet: PublicWallet;
     challenges: ChallengeService;
     constructor({ environment, logLevel, app_id, challenge_reward, currencies }: MCInstantOptions);
-    readonly events: import("events").EventEmitter;
+    readonly events: import("./utils/eventemitter").EventEmitter;
     private getEndpointUrl;
 }
 export declare enum MCIEnvironment {
