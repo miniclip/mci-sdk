@@ -10,9 +10,9 @@
     "dist/**/*.d.ts"
   ],
   "scripts": {
-    "test": "npm run build && npm run test:spec",
-    "test:spec": "nyc mocha -r ts-node/register -r src/core/tests/setup.js src/**/*.spec.ts || true",
-    "build": "npm run clean && tsc -p . && npm run clean:js && webpack --config webpack.js",
+    "test": "npm run clean && npm run test:spec",
+    "test:spec": "TS_NODE_PROJECT=tsconfig.tests.json nyc mocha -r ts-node/register -r src/core/tests/setup.ts src/**/*.spec.ts || true",
+    "build": "npm run clean && tsc -p tsconfig.json && npm run clean:js && webpack --config webpack.js",
     "clean": "shx rm -rf ./dist ./_bundles",
     "clean:js": "shx rm -rf ./dist/*.js ./dist/**/*.js",
     "clean:docs": "shx rm -rf ./docs/api",

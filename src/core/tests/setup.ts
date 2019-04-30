@@ -1,13 +1,17 @@
-var chai = require("chai");
+/// <reference types="../../../types/fbinstant" />
+
+const globalAny:any = global;
+
+var chaiM = require("chai");
 var chaiAsPromised = require("chai-as-promised");
- chai.use(chaiAsPromised);
+chaiM.use(chaiAsPromised);
 
 var __localStorage = {};
 
-const local_getDataAsync = function(keys){
+const local_getDataAsync = function(keys:string[]){
   return new Promise((resolve, reject) => {
     let results = {};
-    keys.forEach((key) => {
+    keys.forEach((key:string) => {
       if (key in __localStorage){
         results[key] = __localStorage[key];
       }
@@ -16,7 +20,7 @@ const local_getDataAsync = function(keys){
   })
 }
 
-const local_setDataAsync = function(data){
+const local_setDataAsync = function(data:any){
   return new Promise((resolve, reject) => {
     let keys = Object.keys(data);
     keys.forEach((key) => {
@@ -26,16 +30,18 @@ const local_setDataAsync = function(data){
   })
 }
 
-global.resetFBLocalStorage = () => {
+globalAny.resetFBLocalStorage = () => {
   __localStorage = {};
 }
 
-global.FBInstant = {
+globalAny.FBInstant = {
   context: {
     getID(){ return "123"; }
   },
   player: {
     getID(){ return "1"; },
+    getName(){ return "Player1"; },
+    getPhoto(){ return ""; },
     getSignedPlayerInfoAsync: () => new Promise(resolve => {
         resolve({
           getSignature: () => "test_signature",
@@ -49,5 +55,3 @@ global.FBInstant = {
   setSessionData: () => {}
   
 };
-
-
