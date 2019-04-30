@@ -1,5 +1,4 @@
-/// <reference types="node" />
-import { EventEmitter } from "events";
+import { EventEmitter } from "./eventemitter";
 export default class DIContainer {
     private modules;
     private logger;

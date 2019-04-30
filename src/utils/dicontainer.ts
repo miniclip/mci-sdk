@@ -1,5 +1,5 @@
 import { Logger, getLogger } from "../logger";
-import { EventEmitter } from "events";
+import { EventEmitter } from "./eventemitter";
 import { BaseService } from "../core/services";
 
 export default class DIContainer {

@@ -79,6 +79,11 @@ export class Challenge {
     return this;
   }
 
+  setChallengeId(challenge_id: string){
+    this._data.challenge_id = challenge_id;
+    return this;
+  }
+
   hasScore(player_id: string | undefined) {
     if (player_id == undefined) return false;
     
@@ -230,7 +235,7 @@ export class Challenge {
       score -= this._originalScore;
     }
 
-    const playerId = FBInstant.player.getID();
+    const playerId = this.getPlayerId();
     const challengeData = { context_id, score, duration, timezone_offset};
 
     try {
@@ -255,6 +260,22 @@ export class Challenge {
     }
 
     return true;
+  }
+
+  async delete(){
+    // make request
+    const playerId = this.getPlayerId();
+    const challengeId = this.challengeId;
+    const url = "/players/" + playerId + "/challenges/" + challengeId;
+
+    try {
+      const response = await this._network.delete(url);
+      const status = response.status;
+      if (status >= 200 && status <= 299) return true;
+    } catch(err){
+    }
+    return false;
+
   }
 
   toJSON() {

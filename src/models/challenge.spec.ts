@@ -61,8 +61,6 @@ describe("ChallengeModel", function(){
     let new_challenge = new Challenge(container, "1");
     new_challenge.loadShareToken(token);
 
-    console.log(new_challenge.data);
-    console.log(original_data);
     expect(new_challenge.data).to.be.deep.equal(original_data);
   })
 });
