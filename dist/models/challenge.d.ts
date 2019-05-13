@@ -10,6 +10,8 @@ export declare type ChallengeType = {
     end_ts: number;
     updated_ts: number;
     version?: number;
+    player_id?: string;
+    other_player_id?: string;
 };
 export declare class Challenge {
     private _session;
@@ -26,6 +28,7 @@ export declare class Challenge {
     hasScore(player_id: string | undefined): boolean;
     getScore(player_id: string | undefined): number;
     getPlayerId(): string;
+    getChallengerId(): string | undefined;
     getPlayerScore(): number;
     playerHasScore(): boolean;
     getOpponentId(): string | undefined;
