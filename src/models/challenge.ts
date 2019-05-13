@@ -2,7 +2,7 @@ import { SessionService } from "../services/session";
 import DIContainer from "../utils/dicontainer";
 import { Modules } from "../services";
 import { INetworkManager } from "../core/network";
-import { AxiosPromise } from "axios";
+import MCContext from "../core/context";
 
 export type ChallengeType = {
   type: string;
@@ -13,6 +13,8 @@ export type ChallengeType = {
   end_ts: number;
   updated_ts: number;
   version?:number;
+  player_id?:string;
+  other_player_id?:string
 };
 
 export class Challenge {
@@ -41,7 +43,7 @@ export class Challenge {
   public parse(data: any): Challenge | undefined {
     if (data == null) return undefined;
 
-    let { end_ts, updated_ts, context_id, challenge_id} = data;
+    let { end_ts, updated_ts, context_id, challenge_id, other_player_id, player_id } = data;
     if (context_id == null) return undefined;
 
     
@@ -51,6 +53,8 @@ export class Challenge {
     this._data.end_ts = end_ts || -1;
     this._data.updated_ts = updated_ts || -1;
     this._data.challenge_id = challenge_id;
+    this._data.other_player_id = other_player_id;
+    this._data.player_id = player_id;
     
     this._originalScore = this.getPlayerScore();
 
@@ -107,18 +111,23 @@ export class Challenge {
   getPlayerId() {
     return this._currentPlayer;
   }
+
+  getChallengerId(){
+    return this._data.player_id;
+  }
+
   /**
    * Returns the score for the current player
    */
   getPlayerScore() {
-    return this.getScore(this._currentPlayer);
+    return this.getScore(this.getPlayerId());
   }
 
   /**
    * Returns true if the current player has a score set
    */
   playerHasScore(){
-    return this.hasScore(this._currentPlayer);
+    return this.hasScore(this.getPlayerId());
   }
 
   /**
@@ -126,6 +135,9 @@ export class Challenge {
    * Should only be used in challenges between two players
    */
   getOpponentId(): string | undefined {
+    if (this._data.other_player_id && this._data.other_player_id != this._currentPlayer) return this._data.other_player_id;
+    if (this._data.player_id && this._data.player_id != this._currentPlayer) return this._data.player_id;
+    
     const keys = Object.keys(this._data.score);
     return keys.find(id => id != this._currentPlayer);
   }
@@ -236,12 +248,17 @@ export class Challenge {
     }
 
     const playerId = this.getPlayerId();
-    const challengeData = { context_id, score, duration, timezone_offset};
+    var challengeData = { context_id, score, duration, timezone_offset};
 
     try {
       var result:any;
-      if (!this.challengeId){
-        // create
+      if (!this.challengeId){ // create
+
+        var otherPlayers = await MCContext.getOtherPlayers();
+        if (otherPlayers.length == 1){
+          challengeData['other_player_id'] = otherPlayers[0].id;
+        }
+        
         result = await this._network.post(`/players/${playerId}/challenges`, challengeData);
       } else {
         // update
