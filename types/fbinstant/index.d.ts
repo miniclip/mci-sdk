@@ -67,6 +67,13 @@ declare namespace FBInstant {
          * Opens a context selection dialog for the player.
          * */
         chooseAsync(options?: object): Promise<boolean>;
+
+        /**
+         *  Gets an array of #contextplayer objects containing information about active players
+         *  in the current context (people who played the game in the current context in the last 90 days). 
+         *  This may include the current player.
+         **/
+        getPlayersAsync():Promise<ContextPlayer[]>
     }
 
     interface SignedPlayerInfo {
@@ -80,5 +87,22 @@ declare namespace FBInstant {
          */
         getSignature(): string;
 
+    }
+
+    interface ContextPlayer {
+         /**
+         * A unique identifier for the current game context. 
+         */
+        getID(): string;
+
+        /**
+         * The player's localized display name.
+         */
+        getName(): string;
+
+        /** 
+         * A url to the player's public profile photo 
+         **/
+        getPhoto(): string;
     }
 }
