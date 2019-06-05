@@ -32,12 +32,6 @@ describe("ChallengeModel", function(){
     expect(challenge.duration).to.be.greaterThan(0);
   });
 
-  it("should not parse an invalid challenge", () => {
-    const challenge = new Challenge(container, "1").parse(sample_invalid_challenge);
-
-    expect(challenge).to.be.undefined;
-  });
-
   it("should accept an valid challenge", () => {
     let challenge = new Challenge(container, "1").parse(sample_valid_challenge);
 
