@@ -39,7 +39,9 @@ export default class FBContext implements IContext{
         })
 
         resolve(filteredPlayers);
-      });
+      }, () => {
+        resolve([]);
+      })
     })
   }
 

@@ -44,7 +44,7 @@ export class Challenge {
     if (data == null) return undefined;
 
     let { end_ts, updated_ts, context_id, challenge_id, other_player_id, player_id } = data;
-    if (context_id == null) return undefined;
+    //if (context_id == null) return undefined;
 
     
     let scores = "score" in data ? data["score"] : {};
