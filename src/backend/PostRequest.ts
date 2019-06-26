@@ -24,7 +24,7 @@ export class PostRequest implements IRequest {
         this.payload = payload || { requestID:'', okConfirmation:false };
         this.payload.requestID = this.payload.requestID || `${recipientID}_${new Date().getTime()}`;
         this.payload.okConfirmation = this.responseType === ResponseTypes.OK;
-        this.retries = retries < 0 ? 0 : retries;
+        this.retries = retries;
     }
 
     public send() {
@@ -42,13 +42,12 @@ export class PostRequest implements IRequest {
             };
 
             const sendMessage = () => {
-                if (this.nTries > this.retries) {
+                if (this.nTries++ > this.retries) {
                     this.clear();
                     reject();
                     return;
                 }
-
-                this.nTries++;
+                
                 ConnectionManager.instance.send(this);
 
                 if(!this.responseType) {

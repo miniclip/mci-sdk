@@ -3,13 +3,16 @@ import { PingRequest } from './PingRequest';
 import { getRetryMSDelay } from './Utils';
 
 export class ConnectionManager {
-    private static MAX_RETRIES:number = 6;
-    private connected:boolean = false;
+    private _connected:boolean = false;
+    public get connected():boolean {
+        return this._connected;
+    }
 
     public static _instance:ConnectionManager = new ConnectionManager();
     public static get instance():ConnectionManager {
         if (!this._instance) {
             this._instance = new ConnectionManager();
+            this._instance.setup();
         }
 
         return this._instance;
@@ -20,6 +23,9 @@ export class ConnectionManager {
 
     constructor() {
         this.handlers = new Map();
+    }
+
+    private setup() {
         new PingRequest().init();
     }
 
@@ -45,14 +51,16 @@ export class ConnectionManager {
 
     }
 
-    public connect(url:string) {
-        const connectToServer = (nRetries:number = 0) => {
+    public connect(url:string, retries:number = 5) {
+        let nTries:number = 0;
+        
+        const connectToServer = () => {
             return new Promise((resolve, reject) => {
                 this.socket = new WebSocket(url);
     
                 this.socket.onopen = (ev:Event) => {
-                    this.connected = true;
-                    nRetries = 0;
+                    this._connected = true;
+                    nTries = 0;
                     this.callHandlers('open', ev);
                     resolve();
                 };
@@ -66,13 +74,13 @@ export class ConnectionManager {
                 };
     
                 this.socket.onclose = (ev:CloseEvent) => {
-                    this.connected = false;
+                    this._connected = false;
                     this.callHandlers('close', ev);
                     
-                    if (nRetries++ < ConnectionManager.MAX_RETRIES) {
+                    if (++nTries > retries) {
                         setTimeout(() => {
                             connectToServer().then(resolve, reject);
-                        }, getRetryMSDelay(nRetries));
+                        }, getRetryMSDelay(nTries));
                     } else {
                         reject();
                     }
@@ -95,7 +103,7 @@ export class ConnectionManager {
     }
 
     public send(request:IRequest) {
-        if (this.socket && this.connected) {
+        if (this.socket && this._connected) {
             this.socket.send(request.stringify());
         }
     }
