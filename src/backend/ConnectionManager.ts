@@ -20,6 +20,7 @@ export class ConnectionManager {
 
     constructor() {
         this.handlers = new Map();
+        new PingRequest().init();
     }
 
     public registerHandler(type:keyof WebSocketEventMap, callback:(data:any) => void) {
@@ -47,8 +48,6 @@ export class ConnectionManager {
     public connect(url:string) {
         const connectToServer = (nRetries:number = 0) => {
             return new Promise((resolve, reject) => {
-                new PingRequest().init();
-                
                 this.socket = new WebSocket(url);
     
                 this.socket.onopen = (ev:Event) => {
