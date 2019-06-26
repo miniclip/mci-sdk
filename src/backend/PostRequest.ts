@@ -8,6 +8,7 @@ export class PostRequest implements IRequest {
     protected type:string;
     protected recipientID:string;
     protected payload:IPostPayload;
+    private responseType:string;
     
     private retries:number;
     private nTries:number = 0;
@@ -16,16 +17,13 @@ export class PostRequest implements IRequest {
     private handleError:any;
     private sendMessageLooper:any;
 
-    protected get responseType():string {
-        return ResponseTypes.OK;
-    }
-
-    constructor(type:string, recipientID:string, payload?:IPostPayload, waitForOK:boolean = false, retries:number = 2) {
+    constructor(type:string, recipientID:string, payload?:IPostPayload, responseType:string = ResponseTypes.OK, retries:number = 2) {
         this.type = type;
         this.recipientID = recipientID;
+        this.responseType = responseType;
         this.payload = payload || { requestID:'', okConfirmation:false };
         this.payload.requestID = this.payload.requestID || `${recipientID}_${new Date().getTime()}`;
-        this.payload.okConfirmation = waitForOK;
+        this.payload.okConfirmation = this.responseType === ResponseTypes.OK;
         this.retries = retries < 0 ? 0 : retries;
     }
 
@@ -53,12 +51,12 @@ export class PostRequest implements IRequest {
                 this.nTries++;
                 ConnectionManager.instance.send(this);
 
-                if(this.retries == 0) {
+                if(!this.responseType) {
                     resolve();
                 }
             };
 
-            if(this.retries > 0) {
+            if(this.responseType) {
                 ResponseHandlersManager.instance.registerPostHandler(this.responseType, this.handleSuccess);
                 ResponseHandlersManager.instance.registerHandler(ResponseTypes.POST_FAILURE, this.handleError);
                 ConnectionManager.instance.registerHandler('close', this.handleError);
