@@ -78,11 +78,11 @@ export class ConnectionManager {
                     this.callHandlers('close', ev);
                     
                     if (++nTries > retries) {
+                        reject();
+                    } else {
                         setTimeout(() => {
                             connectToServer().then(resolve, reject);
                         }, getRetryMSDelay(nTries));
-                    } else {
-                        reject();
                     }
                 };
             });

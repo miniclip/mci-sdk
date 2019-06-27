@@ -66,15 +66,18 @@ export class LoginRequest implements IRequest {
             });
         };
 
+        this.handleError = () => {
+            this.clearHandlers();
+            if(this.onError) {
+                this.onError();
+            }
+        };
+
         this.sendMessage = () => {
             if (this.nRetries++ > this.retries) {
-                this.clearHandlers();
-                if(this.onError) {
-                    this.onError();
-                }
+                this.handleError();
                 return;
             }
-
             getSignature().then(() => {
                 ConnectionManager.instance.send(this);
             }, this.sendMessage);
@@ -83,11 +86,6 @@ export class LoginRequest implements IRequest {
         this.handleSuccess = () => {
             this.loggedIn = true;
             this.onLogin();
-        };
-
-        this.handleError = () => {
-            this.signature = '';
-            this.sendMessage();
         };
 
         ResponseHandlersManager.instance.registerHandler(ResponseTypes.LOGIN_SUCCESS, this.handleSuccess);

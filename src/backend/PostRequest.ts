@@ -50,12 +50,12 @@ export class PostRequest implements IRequest {
                 
                 ConnectionManager.instance.send(this);
 
-                if(!this.responseType) {
+                if (!this.responseType) {
                     resolve();
                 }
             };
 
-            if(this.responseType) {
+            if (this.responseType) {
                 ResponseHandlersManager.instance.registerPostHandler(this.responseType, this.handleSuccess);
                 ResponseHandlersManager.instance.registerHandler(ResponseTypes.POST_FAILURE, this.handleError);
                 ConnectionManager.instance.registerHandler('close', this.handleError);
