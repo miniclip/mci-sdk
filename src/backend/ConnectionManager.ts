@@ -20,7 +20,7 @@ export class ConnectionManager {
     private socket:WebSocket;
     private handlers:Map<keyof WebSocketEventMap, Array<(data:any) => void>>;
 
-    constructor() {
+    private constructor() {
         this.handlers = new Map();
     }
 

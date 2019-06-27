@@ -16,7 +16,7 @@ export class ResponseHandlersManager {
     private handlers:Map<ResponseTypes, Array<(data:any) => void>> = new Map();
     private postHandlers:Map<string, Array<(data:IPostResponse) => void>> = new Map();
 
-    constructor() {
+    private constructor() {
         ConnectionManager.instance.registerHandler('message', (ev:MessageEvent) => {
             if (ev.data === 'pong') {
                 return;
