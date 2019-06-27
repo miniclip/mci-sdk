@@ -2,9 +2,19 @@ import { ConnectionManager } from './ConnectionManager';
 import { IRequest } from './IRequest';
 
 export class PingRequest implements IRequest {
+    private static initialized:boolean = false;
     private timer:any;
     constructor() {
         //empty
+    }
+
+    public static init() {
+        if (PingRequest.initialized) {
+            return;
+        }
+        
+        new PingRequest().init();
+        PingRequest.initialized = true;
     }
 
     public init() {

@@ -12,7 +12,6 @@ export class ConnectionManager {
     public static get instance():ConnectionManager {
         if (!this._instance) {
             this._instance = new ConnectionManager();
-            this._instance.setup();
         }
 
         return this._instance;
@@ -23,10 +22,6 @@ export class ConnectionManager {
 
     constructor() {
         this.handlers = new Map();
-    }
-
-    private setup() {
-        new PingRequest().init();
     }
 
     public registerHandler(type:keyof WebSocketEventMap, callback:(data:any) => void) {
@@ -53,6 +48,11 @@ export class ConnectionManager {
 
     public connect(url:string, retries:number = 5) {
         let nTries:number = 0;
+        if (this.connected) {
+            return;
+        }
+
+        PingRequest.init();
         
         const connectToServer = () => {
             return new Promise((resolve, reject) => {
