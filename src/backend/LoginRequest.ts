@@ -1,111 +1,70 @@
-import { ConnectionManager } from './ConnectionManager';
 import { IRequest } from './IRequest';
-import { ResponseHandlersManager } from './ResponseHandlersManager';
+import { ISocket } from './ISocket';
 import { ResponseTypes } from './ResponseTypes';
+import { SocketMessageHandler } from './SocketMessageHandler';
 
 export class LoginRequest implements IRequest {
     private readonly appID:string;
     private readonly retries:number;
 
-    private nRetries:number = 0;
     private signature:string;
 
     private sendMessage:any;
     private handleSuccess:any;
     private handleError:any;
 
-    private socketOpen:boolean = false;
-    private loginRequested:boolean = false;
-    private loggedIn:boolean = false;
-
-    private onLogin:() => void;
-    private onError:() => void;
-
     constructor(appID:string, retries:number = 2) {
         this.appID = appID;
         this.retries = retries;
-        ConnectionManager.instance.registerHandler('open', () => this.onSocketOpen());
-        ConnectionManager.instance.registerHandler('close', () => this.onSocketClosed());
     }
 
-    private onSocketOpen() {
-        this.socketOpen = true;
-        this.login();
-    }
+    public send(socket:ISocket) {
+        const messageHandler = new SocketMessageHandler(socket);
+        let nTries = 0;
 
-    private onSocketClosed() {
-        this.socketOpen = false;
-        this.loggedIn = false;
-    }
-
-    public send(onLogin:() => void, onError:() => void) {
-        this.onLogin = onLogin;
-        this.onError = onError;
-
-        this.loginRequested = true;
-        this.socketOpen = ConnectionManager.instance.connected;
-        this.login();
-    }
-
-    private login() {
-        if(!this.socketOpen || !this.loginRequested || this.loggedIn) {
-            return;
-        }
-
-        const getSignature = () => {
-            return new Promise((resolve, reject) => {
-                if (this.signature) {
-                    resolve();
+        return new Promise((resolve, reject) => {
+            this.handleError = () => {
+                messageHandler.unregisterHandler(ResponseTypes.LOGIN_SUCCESS, this.handleSuccess);
+                messageHandler.unregisterHandler(ResponseTypes.LOGIN_FAILURE, this.handleError);
+                socket.unregisterHandler('error', this.sendMessage);
+                reject();
+            };
+    
+            this.sendMessage = () => {
+                if (nTries++ > this.retries) {
+                    this.handleError();
                     return;
                 }
-
-                (window as any).FBInstant.player.getSignedPlayerInfoAsync().then((result:any) => {
-                    this.signature = result.getSignature();
-                    resolve();
-                }, reject);
-            });
-        };
-
-        this.handleError = () => {
-            this.clearHandlers();
-            if(this.onError) {
-                this.onError();
-            }
-        };
-
-        this.sendMessage = () => {
-            if (this.nRetries++ > this.retries) {
-                this.handleError();
-                return;
-            }
-            getSignature().then(() => {
-                ConnectionManager.instance.send(this);
-            }, this.sendMessage);
-        };
-        
-        this.handleSuccess = () => {
-            this.loggedIn = true;
-            this.onLogin();
-        };
-
-        ResponseHandlersManager.instance.registerHandler(ResponseTypes.LOGIN_SUCCESS, this.handleSuccess);
-        ResponseHandlersManager.instance.registerHandler(ResponseTypes.LOGIN_FAILURE, this.handleError);
-        ConnectionManager.instance.registerHandler('error', this.sendMessage);
-
-        this.sendMessage();
+                
+                this.getSignature().then(() => {
+                    socket.send(this.stringify());
+                }, this.sendMessage);
+            };
+            
+            this.handleSuccess = () => resolve();
+    
+            messageHandler.registerHandler(ResponseTypes.LOGIN_SUCCESS, this.handleSuccess);
+            messageHandler.registerHandler(ResponseTypes.LOGIN_FAILURE, this.handleError);
+            socket.registerHandler('error', this.sendMessage);
+    
+            this.sendMessage();
+        });
     }
 
-    private clearHandlers() {
-        ResponseHandlersManager.instance.unregisterHandler(ResponseTypes.LOGIN_SUCCESS, this.handleSuccess);
-        ResponseHandlersManager.instance.unregisterHandler(ResponseTypes.LOGIN_FAILURE, this.handleError);
-        ConnectionManager.instance.unregisterHandler('error', this.sendMessage);
-        this.sendMessage = undefined;
-        this.handleSuccess = undefined;
-        this.handleError = undefined;
-        this.nRetries = 0;
+    private getSignature():Promise<any> {
+        if (this.signature) {
+            return Promise.resolve();
+        }
+
+        return new Promise((resolve, reject) => {
+            (window as any).FBInstant.player.getSignedPlayerInfoAsync().then((result:any) => {
+                this.signature = result.getSignature();
+                resolve();
+            }, reject);
+        });
     }
 
-    public stringify() {
+    private stringify() {
         const request = {
             type:'login',
             app_id:this.appID,

@@ -1,3 +1,5 @@
+import { ISocket } from './ISocket';
+
 export interface IRequest {
-    stringify():string;
+    send(webSocket:ISocket):Promise<any>;
 }

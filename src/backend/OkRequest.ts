@@ -1,4 +1,5 @@
 import { IRequest } from './IRequest';
+import { ISocket } from './ISocket';
 import { ResponseTypes } from './ResponseTypes';
 
 export class OkRequest implements IRequest {
@@ -10,7 +11,12 @@ export class OkRequest implements IRequest {
         this.recipientID = recipientID;
     }
 
-    public stringify() {
+    public send(socket:ISocket) {
+        socket.send(this.stringify());
+        return Promise.resolve();
+    }
+
+    private stringify() {
         return JSON.stringify({
             type:ResponseTypes.POST,
             recipient_id:this.recipientID,

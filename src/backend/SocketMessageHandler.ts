@@ -1,23 +1,13 @@
-import { ConnectionManager } from './ConnectionManager';
 import { IPostResponse } from './IPostMessage';
-import { OkRequest } from './OkRequest';
+import { ISocket } from './ISocket';
 import { ResponseTypes } from './ResponseTypes';
 
-export class ResponseHandlersManager {
-    public static _instance:ResponseHandlersManager = new ResponseHandlersManager();
-    public static get instance():ResponseHandlersManager {
-        if (!this._instance) {
-            this._instance = new ResponseHandlersManager();
-        }
-
-        return this._instance;
-    }
-
+export class SocketMessageHandler {
     private handlers:Map<ResponseTypes, Array<(data:any) => void>> = new Map();
     private postHandlers:Map<string, Array<(data:IPostResponse) => void>> = new Map();
 
-    private constructor() {
-        ConnectionManager.instance.registerHandler('message', (ev:MessageEvent) => {
+    constructor(socket:ISocket) {
+        socket.registerHandler('message', (ev:MessageEvent) => {
             if (ev.data === 'pong') {
                 return;
             }
@@ -31,14 +21,10 @@ export class ResponseHandlersManager {
                 }
             }
 
-            if(message.type === ResponseTypes.POST) {
-                const postMessage:IPostResponse = message as IPostResponse;
-                if (postMessage.payload.okConfirmation) {
-                    ConnectionManager.instance.send(new OkRequest(postMessage.payload.requestID, postMessage.sender_id));
-                }
-                
+            if (message.type === ResponseTypes.POST) {
+                const postMessage:IPostResponse = message as IPostResponse;                
                 const postHandlers = this.postHandlers.get(postMessage.id);
-                if(postHandlers) {
+                if (postHandlers) {
                     for (const handler of postHandlers) {
                         handler(message as IPostResponse);
                     }

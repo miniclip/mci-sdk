@@ -1,27 +1,15 @@
-import { IRequest } from './IRequest';
-import { PingRequest } from './PingRequest';
+import { ISocket } from './ISocket';
 import { getRetryMSDelay } from './Utils';
 
-export class ConnectionManager {
-    private _connected:boolean = false;
-    public get connected():boolean {
-        return this._connected;
-    }
-
-    public static _instance:ConnectionManager = new ConnectionManager();
-    public static get instance():ConnectionManager {
-        if (!this._instance) {
-            this._instance = new ConnectionManager();
-        }
-
-        return this._instance;
-    }
-
+export class Socket implements ISocket {
+    private connected:boolean = false;
+    private url:string;
     private socket:WebSocket;
     private handlers:Map<keyof WebSocketEventMap, Array<(data:any) => void>>;
 
-    private constructor() {
+    constructor(url:string) {
         this.handlers = new Map();
+        this.url = url;
     }
 
     public registerHandler(type:keyof WebSocketEventMap, callback:(data:any) => void) {
@@ -46,20 +34,18 @@ export class ConnectionManager {
 
     }
 
-    public connect(url:string, retries:number = 5) {
+    public connect(retries:number = 5) {
         let nTries:number = 0;
         if (this.connected) {
-            return;
+            return Promise.resolve();
         }
-
-        PingRequest.init();
         
         const connectToServer = () => {
             return new Promise((resolve, reject) => {
-                this.socket = new WebSocket(url);
+                this.socket = new WebSocket(this.url);
     
                 this.socket.onopen = (ev:Event) => {
-                    this._connected = true;
+                    this.connected = true;
                     nTries = 0;
                     this.callHandlers('open', ev);
                     resolve();
@@ -74,7 +60,7 @@ export class ConnectionManager {
                 };
     
                 this.socket.onclose = (ev:CloseEvent) => {
-                    this._connected = false;
+                    this.connected = false;
                     this.callHandlers('close', ev);
                     
                     if (++nTries > retries) {
@@ -102,9 +88,9 @@ export class ConnectionManager {
         }
     }
 
-    public send(request:IRequest) {
-        if (this.socket && this._connected) {
-            this.socket.send(request.stringify());
+    public send(message:string) {
+        if (this.socket && this.connected) {
+            this.socket.send(message);
         }
     }
 }

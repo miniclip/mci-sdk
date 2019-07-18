@@ -1,41 +1,25 @@
-import { ConnectionManager } from './ConnectionManager';
 import { IRequest } from './IRequest';
+import { ISocket } from './ISocket';
 
 export class PingRequest implements IRequest {
-    private static initialized:boolean = false;
     private timer:any;
-    constructor() {
-        //empty
+    private delay:number;
+
+    constructor(delay:number = 5000) {
+        this.delay = delay;
     }
 
-    public static init() {
-        if (PingRequest.initialized) {
-            return;
-        }
-        
-        new PingRequest().init();
-        PingRequest.initialized = true;
-    }
-
-    public init() {
-        ConnectionManager.instance.registerHandler('open', () => this.start());
-        ConnectionManager.instance.registerHandler('close', () => this.stop());
-    }
-
-    private start() {
+    public send(socket:ISocket) {
         this.stop();
 
         this.timer = setInterval(() => {
-            ConnectionManager.instance.send(this);
-        }, 5000);
+            socket.send('ping');
+        }, this.delay);
+
+        return Promise.resolve();
     }
 
-    private stop() {
+    public stop() {
         clearInterval(this.timer);
-        this.timer = undefined;
-    }
-
-    public stringify() {
-        return 'ping';
     }
 }

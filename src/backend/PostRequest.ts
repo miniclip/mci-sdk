@@ -1,17 +1,14 @@
-import { ConnectionManager } from './ConnectionManager';
 import { IPostPayload, IPostRequest, IPostResponse } from './IPostMessage';
 import { IRequest } from './IRequest';
-import { ResponseHandlersManager } from './ResponseHandlersManager';
+import { ISocket } from './ISocket';
 import { ResponseTypes } from './ResponseTypes';
-
+import { SocketMessageHandler } from './SocketMessageHandler';
 export class PostRequest implements IRequest {
     protected type:string;
     protected recipientID:string;
     protected payload:IPostPayload;
     private responseType:string;
-    
     private retries:number;
-    private nTries:number = 0;
 
     private handleSuccess:any;
     private handleError:any;
@@ -27,28 +24,40 @@ export class PostRequest implements IRequest {
         this.retries = retries;
     }
 
-    public send() {
+    public send(socket:ISocket) {
+        const messageHandler = new SocketMessageHandler(socket);
+        let nTries = 0;
+        
         return new Promise((resolve, reject) => {
+            const clear = () => {
+                messageHandler.unregisterPostHandler(this.responseType, this.handleSuccess);
+                messageHandler.unregisterHandler(ResponseTypes.POST_FAILURE, this.handleError);
+                socket.unregisterHandler('close', this.handleError);
+        
+                clearInterval(this.sendMessageLooper);
+                this.sendMessageLooper = undefined;
+            };
+
             this.handleSuccess = (message:IPostResponse) => {
                 if (message.payload.requestID === this.payload.requestID) {
-                    this.clear();
+                    clear();
                     resolve(message);
                 }
             };
 
             this.handleError = () => {
-                this.clear();
+                clear();
                 reject();
             };
 
             const sendMessage = () => {
-                if (this.nTries++ > this.retries) {
-                    this.clear();
+                if (nTries++ > this.retries) {
+                    clear();
                     reject();
                     return;
                 }
                 
-                ConnectionManager.instance.send(this);
+                socket.send(this.stringify());
 
                 if (!this.responseType) {
                     resolve();
@@ -56,9 +65,9 @@ export class PostRequest implements IRequest {
             };
 
             if (this.responseType) {
-                ResponseHandlersManager.instance.registerPostHandler(this.responseType, this.handleSuccess);
-                ResponseHandlersManager.instance.registerHandler(ResponseTypes.POST_FAILURE, this.handleError);
-                ConnectionManager.instance.registerHandler('close', this.handleError);
+                messageHandler.registerPostHandler(this.responseType, this.handleSuccess);
+                messageHandler.registerHandler(ResponseTypes.POST_FAILURE, this.handleError);
+                socket.registerHandler('close', this.handleError);
                 this.sendMessageLooper = setInterval(sendMessage, 1000);
             }
             
@@ -66,16 +75,7 @@ export class PostRequest implements IRequest {
         });
     }
 
-    private clear() {
-        ResponseHandlersManager.instance.unregisterPostHandler(this.responseType, this.handleSuccess);
-        ResponseHandlersManager.instance.unregisterHandler(ResponseTypes.POST_FAILURE, this.handleError);
-        ConnectionManager.instance.unregisterHandler('close', this.handleError);
-
-        clearInterval(this.sendMessageLooper);
-        this.sendMessageLooper = undefined;
-    }
-
-    public stringify(): string {
+    private stringify():string {
         const request:IPostRequest = {
             type:ResponseTypes.POST,
             recipient_id:this.recipientID,
