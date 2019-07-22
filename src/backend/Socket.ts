@@ -2,7 +2,6 @@ import { ISocket } from './ISocket';
 import { getRetryMSDelay } from './Utils';
 
 export class Socket implements ISocket {
-    private connected:boolean = false;
     private url:string;
     private socket:WebSocket;
     private handlers:Map<keyof WebSocketEventMap, Array<(data:any) => void>>;
@@ -36,7 +35,7 @@ export class Socket implements ISocket {
 
     public connect(retries:number = 5) {
         let nTries:number = 0;
-        if (this.connected) {
+        if (this.socket && this.socket.readyState === 1) {
             return Promise.resolve();
         }
         
@@ -45,7 +44,6 @@ export class Socket implements ISocket {
                 this.socket = new WebSocket(this.url);
     
                 this.socket.onopen = (ev:Event) => {
-                    this.connected = true;
                     nTries = 0;
                     this.callHandlers('open', ev);
                     resolve();
@@ -60,7 +58,6 @@ export class Socket implements ISocket {
                 };
     
                 this.socket.onclose = (ev:CloseEvent) => {
-                    this.connected = false;
                     this.callHandlers('close', ev);
                     
                     if (++nTries > retries) {
@@ -89,7 +86,7 @@ export class Socket implements ISocket {
     }
 
     public send(message:string) {
-        if (this.socket && this.connected) {
+        if (this.socket && this.socket.readyState === 1) {
             this.socket.send(message);
         }
     }
