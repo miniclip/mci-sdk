@@ -34,44 +34,39 @@ export class Socket implements ISocket {
     }
 
     public connect(retries:number = 5) {
-        let nTries:number = 0;
         if (this.socket && this.socket.readyState === 1) {
-            return Promise.resolve();
+            return;
         }
         
+        let nTries:number = 0;
         const connectToServer = () => {
-            return new Promise((resolve, reject) => {
-                this.socket = new WebSocket(this.url);
-    
-                this.socket.onopen = (ev:Event) => {
-                    nTries = 0;
-                    this.callHandlers('open', ev);
-                    resolve();
-                };
+            this.socket = new WebSocket(this.url);
 
-                this.socket.onerror = (ev:Event) => {
-                    this.callHandlers('error', ev);
-                };
+            this.socket.onopen = (ev:Event) => {
+                nTries = 0;
+                this.callHandlers('open', ev);
+            };
 
-                this.socket.onmessage = (ev:MessageEvent) => {
-                    this.callHandlers('message', ev);
-                };
-    
-                this.socket.onclose = (ev:CloseEvent) => {
-                    this.callHandlers('close', ev);
-                    
-                    if (++nTries > retries) {
-                        reject();
-                    } else {
-                        setTimeout(() => {
-                            connectToServer().then(resolve, reject);
-                        }, getRetryMSDelay(nTries));
-                    }
-                };
-            });
+            this.socket.onerror = (ev:Event) => {
+                this.callHandlers('error', ev);
+            };
+
+            this.socket.onmessage = (ev:MessageEvent) => {
+                this.callHandlers('message', ev);
+            };
+
+            this.socket.onclose = (ev:CloseEvent) => {
+                this.callHandlers('close', ev);
+                
+                if (++nTries <= retries) {
+                    setTimeout(() => {
+                        connectToServer();
+                    }, getRetryMSDelay(nTries));
+                }
+            };
         };
 
-        return connectToServer();
+        connectToServer();
     }
 
     private callHandlers(type:keyof WebSocketEventMap, data:any) {

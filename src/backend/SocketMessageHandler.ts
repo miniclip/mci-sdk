@@ -22,7 +22,7 @@ export class SocketMessageHandler {
             }
 
             if (message.type === ResponseTypes.POST) {
-                const postMessage:IPostResponse = message as IPostResponse;                
+                const postMessage:IPostResponse = message as IPostResponse;
                 const postHandlers = this.postHandlers.get(postMessage.id);
                 if (postHandlers) {
                     for (const handler of postHandlers) {
