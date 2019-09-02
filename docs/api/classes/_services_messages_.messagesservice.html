@@ -3,7 +3,7 @@
 <head>
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<title>PublicWallet | @miniclip/instant</title>
+	<title>MessagesService | @miniclip/instant</title>
 	<meta name="description" content="">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<link rel="stylesheet" href="../assets/css/main.css">
@@ -52,31 +52,29 @@
 					<a href="../globals.html">Globals</a>
 				</li>
 				<li>
-					<a href="../modules/_services_wallet_.html">&quot;services/wallet&quot;</a>
+					<a href="../modules/_services_messages_.html">&quot;services/messages&quot;</a>
 				</li>
 				<li>
-					<a href="_services_wallet_.publicwallet.html">PublicWallet</a>
+					<a href="_services_messages_.messagesservice.html">MessagesService</a>
 				</li>
 			</ul>
-			<h1>Class PublicWallet</h1>
+			<h1>Class MessagesService</h1>
 		</div>
 	</div>
 </header>
 <div class="container container-main">
 	<div class="row">
 		<div class="col-8 col-content">
-			<section class="tsd-panel tsd-comment">
-				<div class="tsd-comment tsd-typography">
-					<div class="lead">
-						<p>User wallet</p>
-					</div>
-				</div>
-			</section>
 			<section class="tsd-panel tsd-hierarchy">
 				<h3>Hierarchy</h3>
 				<ul class="tsd-hierarchy">
 					<li>
-						<span class="target">PublicWallet</span>
+						<span class="tsd-signature-type">BaseService</span>
+						<ul class="tsd-hierarchy">
+							<li>
+								<span class="target">MessagesService</span>
+							</li>
+						</ul>
 					</li>
 				</ul>
 			</section>
@@ -84,83 +82,186 @@
 				<h2>Index</h2>
 				<section class="tsd-panel tsd-index-panel">
 					<div class="tsd-index-content">
-						<section class="tsd-index-section ">
+						<section class="tsd-index-section tsd-is-inherited">
 							<h3>Constructors</h3>
 							<ul class="tsd-index-list">
-								<li class="tsd-kind-constructor tsd-parent-kind-class"><a href="_services_wallet_.publicwallet.html#constructor" class="tsd-kind-icon">constructor</a></li>
+								<li class="tsd-kind-constructor tsd-parent-kind-class tsd-is-inherited"><a href="_services_messages_.messagesservice.html#constructor" class="tsd-kind-icon">constructor</a></li>
+							</ul>
+						</section>
+						<section class="tsd-index-section tsd-is-inherited">
+							<h3>Properties</h3>
+							<ul class="tsd-index-list">
+								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-inherited"><a href="_services_messages_.messagesservice.html#container" class="tsd-kind-icon">container</a></li>
+							</ul>
+						</section>
+						<section class="tsd-index-section tsd-is-inherited tsd-is-private-protected">
+							<h3>Accessors</h3>
+							<ul class="tsd-index-list">
+								<li class="tsd-kind-get-signature tsd-parent-kind-class tsd-is-inherited tsd-is-protected"><a href="_services_messages_.messagesservice.html#events" class="tsd-kind-icon">events</a></li>
 							</ul>
 						</section>
 						<section class="tsd-index-section ">
 							<h3>Methods</h3>
 							<ul class="tsd-index-list">
-								<li class="tsd-kind-method tsd-parent-kind-class"><a href="_services_wallet_.publicwallet.html#addbalance" class="tsd-kind-icon">add<wbr>Balance</a></li>
-								<li class="tsd-kind-method tsd-parent-kind-class"><a href="_services_wallet_.publicwallet.html#getbalance" class="tsd-kind-icon">get<wbr>Balance</a></li>
-								<li class="tsd-kind-method tsd-parent-kind-class"><a href="_services_wallet_.publicwallet.html#updatebalance" class="tsd-kind-icon">update<wbr>Balance</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-overwrite"><a href="_services_messages_.messagesservice.html#_boot" class="tsd-kind-icon">_boot</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class"><a href="_services_messages_.messagesservice.html#listen" class="tsd-kind-icon">listen</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class"><a href="_services_messages_.messagesservice.html#send" class="tsd-kind-icon">send</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-inherited"><a href="_services_messages_.messagesservice.html#setcontainer" class="tsd-kind-icon">set<wbr>Container</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class"><a href="_services_messages_.messagesservice.html#unlisten" class="tsd-kind-icon">unlisten</a></li>
 							</ul>
 						</section>
 					</div>
 				</section>
 			</section>
-			<section class="tsd-panel-group tsd-member-group ">
+			<section class="tsd-panel-group tsd-member-group tsd-is-inherited">
 				<h2>Constructors</h2>
-				<section class="tsd-panel tsd-member tsd-kind-constructor tsd-parent-kind-class">
+				<section class="tsd-panel tsd-member tsd-kind-constructor tsd-parent-kind-class tsd-is-inherited">
 					<a name="constructor" class="tsd-anchor"></a>
 					<h3>constructor</h3>
-					<ul class="tsd-signatures tsd-kind-constructor tsd-parent-kind-class">
-						<li class="tsd-signature tsd-kind-icon">new <wbr>Public<wbr>Wallet<span class="tsd-signature-symbol">(</span>wallet<span class="tsd-signature-symbol">: </span><a href="_services_wallet_.walletservice.html" class="tsd-signature-type">WalletService</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="_services_wallet_.publicwallet.html" class="tsd-signature-type">PublicWallet</a></li>
+					<ul class="tsd-signatures tsd-kind-constructor tsd-parent-kind-class tsd-is-inherited">
+						<li class="tsd-signature tsd-kind-icon">new <wbr>Messages<wbr>Service<span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="_services_messages_.messagesservice.html" class="tsd-signature-type">MessagesService</a></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
+								<p>Inherited from BaseService.__constructor</p>
 								<ul>
-									<li>Defined in <a href="https://github.com/miniclip/fbi-sdk/blob/a02d8ce/src/services/wallet.ts#L118">services/wallet.ts:118</a></li>
+									<li>Defined in <a href="https://github.com/miniclip/fbi-sdk/blob/a02d8ce/src/core/services.ts#L4">core/services.ts:4</a></li>
 								</ul>
 							</aside>
-							<h4 class="tsd-parameters-title">Parameters</h4>
-							<ul class="tsd-parameters">
-								<li>
-									<h5>wallet: <a href="_services_wallet_.walletservice.html" class="tsd-signature-type">WalletService</a></h5>
-								</li>
-							</ul>
-							<h4 class="tsd-returns-title">Returns <a href="_services_wallet_.publicwallet.html" class="tsd-signature-type">PublicWallet</a></h4>
+							<h4 class="tsd-returns-title">Returns <a href="_services_messages_.messagesservice.html" class="tsd-signature-type">MessagesService</a></h4>
+						</li>
+					</ul>
+				</section>
+			</section>
+			<section class="tsd-panel-group tsd-member-group tsd-is-inherited">
+				<h2>Properties</h2>
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class tsd-is-inherited">
+					<a name="container" class="tsd-anchor"></a>
+					<h3>container</h3>
+					<div class="tsd-signature tsd-kind-icon">container<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">DIContainer</span><span class="tsd-signature-symbol"> =&nbsp;&lt;any&gt;null</span></div>
+					<aside class="tsd-sources">
+						<p>Inherited from BaseService.container</p>
+						<ul>
+							<li>Defined in <a href="https://github.com/miniclip/fbi-sdk/blob/a02d8ce/src/core/services.ts#L4">core/services.ts:4</a></li>
+						</ul>
+					</aside>
+				</section>
+			</section>
+			<section class="tsd-panel-group tsd-member-group tsd-is-inherited tsd-is-private-protected">
+				<h2>Accessors</h2>
+				<section class="tsd-panel tsd-member tsd-kind-get-signature tsd-parent-kind-class tsd-is-inherited tsd-is-protected">
+					<a name="events" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagProtected">Protected</span> events</h3>
+					<ul class="tsd-signatures tsd-kind-get-signature tsd-parent-kind-class tsd-is-inherited tsd-is-protected">
+						<li class="tsd-signature tsd-kind-icon"><span class="tsd-signature-symbol">get</span> events<span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">EventEmitter</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<p>Inherited from BaseService.events</p>
+								<ul>
+									<li>Defined in <a href="https://github.com/miniclip/fbi-sdk/blob/a02d8ce/src/core/services.ts#L15">core/services.ts:15</a></li>
+								</ul>
+							</aside>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">EventEmitter</span></h4>
 						</li>
 					</ul>
 				</section>
 			</section>
 			<section class="tsd-panel-group tsd-member-group ">
 				<h2>Methods</h2>
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class tsd-is-overwrite">
+					<a name="_boot" class="tsd-anchor"></a>
+					<h3>_boot</h3>
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-is-overwrite">
+						<li class="tsd-signature tsd-kind-icon">_boot<span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<p>Overrides BaseService._boot</p>
+								<ul>
+									<li>Defined in <a href="https://github.com/miniclip/fbi-sdk/blob/a02d8ce/src/services/messages.ts#L15">services/messages.ts:15</a></li>
+								</ul>
+							</aside>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4>
+						</li>
+					</ul>
+				</section>
 				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class">
-					<a name="addbalance" class="tsd-anchor"></a>
-					<h3>add<wbr>Balance</h3>
+					<a name="listen" class="tsd-anchor"></a>
+					<h3>listen</h3>
 					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
-						<li class="tsd-signature tsd-kind-icon">add<wbr>Balance<span class="tsd-signature-symbol">(</span>amount<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span>, currency<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">boolean</span><span class="tsd-signature-symbol">&gt;</span></li>
+						<li class="tsd-signature tsd-kind-icon">listen<span class="tsd-signature-symbol">(</span>messageID<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span>, callback<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Function</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/miniclip/fbi-sdk/blob/a02d8ce/src/services/wallet.ts#L138">services/wallet.ts:138</a></li>
+									<li>Defined in <a href="https://github.com/miniclip/fbi-sdk/blob/a02d8ce/src/services/messages.ts#L47">services/messages.ts:47</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
 								<div class="lead">
-									<p>Add a specified amount to the specified currency wallet</p>
+									<p>Add a listener for a certain messageID</p>
 								</div>
-								<dl class="tsd-comment-tags">
-									<dt>deprecated</dt>
-									<dd><p>Will be removed in the near future</p>
-									</dd>
-								</dl>
 							</div>
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
 								<li>
-									<h5>amount: <span class="tsd-signature-type">number</span></h5>
+									<h5>messageID: <span class="tsd-signature-type">string</span></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>message identifier to listen for</p>
+									</div>
 								</li>
 								<li>
-									<h5>currency: <span class="tsd-signature-type">string</span></h5>
+									<h5>callback: <span class="tsd-signature-type">Function</span></h5>
 									<div class="tsd-comment tsd-typography">
-										<p>Name of the currency to add to</p>
+										<p>Function to be called when messages with <code>messageID</code> are received</p>
+									</div>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class">
+					<a name="send" class="tsd-anchor"></a>
+					<h3>send</h3>
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
+						<li class="tsd-signature tsd-kind-icon">send<span class="tsd-signature-symbol">(</span>messageID<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span>, recipientID<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span>, payload<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">boolean</span><span class="tsd-signature-symbol">&gt;</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in <a href="https://github.com/miniclip/fbi-sdk/blob/a02d8ce/src/services/messages.ts#L28">services/messages.ts:28</a></li>
+								</ul>
+							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Send a realtime message to a certain player.</p>
+								</div>
+							</div>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>messageID: <span class="tsd-signature-type">string</span></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>string identifier for the message to be sent</p>
+									</div>
+								</li>
+								<li>
+									<h5>recipientID: <span class="tsd-signature-type">string</span></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>player id to who the message will be sent</p>
+									</div>
+								</li>
+								<li>
+									<h5><span class="tsd-flag ts-flagDefault value">Default value</span> payload: <span class="tsd-signature-type">any</span><span class="tsd-signature-symbol"> =&nbsp;null</span></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>data to be sent with the message</p>
 									</div>
 								</li>
 							</ul>
@@ -168,72 +269,64 @@
 						</li>
 					</ul>
 				</section>
-				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class">
-					<a name="getbalance" class="tsd-anchor"></a>
-					<h3>get<wbr>Balance</h3>
-					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
-						<li class="tsd-signature tsd-kind-icon">get<wbr>Balance<span class="tsd-signature-symbol">(</span>filter<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">Array</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">Object</span><span class="tsd-signature-symbol">&gt;</span></li>
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class tsd-is-inherited">
+					<a name="setcontainer" class="tsd-anchor"></a>
+					<h3>set<wbr>Container</h3>
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-is-inherited">
+						<li class="tsd-signature tsd-kind-icon">set<wbr>Container<span class="tsd-signature-symbol">(</span>container<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">DIContainer</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">this</span></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
+								<p>Inherited from BaseService.setContainer</p>
 								<ul>
-									<li>Defined in <a href="https://github.com/miniclip/fbi-sdk/blob/a02d8ce/src/services/wallet.ts#L128">services/wallet.ts:128</a></li>
+									<li>Defined in <a href="https://github.com/miniclip/fbi-sdk/blob/a02d8ce/src/core/services.ts#L10">core/services.ts:10</a></li>
 								</ul>
 							</aside>
-							<div class="tsd-comment tsd-typography">
-								<div class="lead">
-									<p>Fetch the balance</p>
-								</div>
-							</div>
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
 								<li>
-									<h5><span class="tsd-flag ts-flagOptional">Optional</span> filter: <span class="tsd-signature-type">Array</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">&gt;</span></h5>
-									<div class="tsd-comment tsd-typography">
-									</div>
+									<h5>container: <span class="tsd-signature-type">DIContainer</span></h5>
 								</li>
 							</ul>
-							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">Object</span><span class="tsd-signature-symbol">&gt;</span></h4>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">this</span></h4>
 						</li>
 					</ul>
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class">
-					<a name="updatebalance" class="tsd-anchor"></a>
-					<h3>update<wbr>Balance</h3>
+					<a name="unlisten" class="tsd-anchor"></a>
+					<h3>unlisten</h3>
 					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
-						<li class="tsd-signature tsd-kind-icon">update<wbr>Balance<span class="tsd-signature-symbol">(</span>amount<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span>, currency<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">Object</span><span class="tsd-signature-symbol">&gt;</span></li>
+						<li class="tsd-signature tsd-kind-icon">unlisten<span class="tsd-signature-symbol">(</span>messageID<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span>, callback<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Function</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/miniclip/fbi-sdk/blob/a02d8ce/src/services/wallet.ts#L148">services/wallet.ts:148</a></li>
+									<li>Defined in <a href="https://github.com/miniclip/fbi-sdk/blob/a02d8ce/src/services/messages.ts#L59">services/messages.ts:59</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
 								<div class="lead">
-									<p>Sets the specified $currency wallet to the specified $amount</p>
+									<p>Removes a listener for a certain messageID</p>
 								</div>
-								<dl class="tsd-comment-tags">
-									<dt>deprecated</dt>
-									<dd><p>Will be removed in the near future</p>
-									</dd>
-								</dl>
 							</div>
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
 								<li>
-									<h5>amount: <span class="tsd-signature-type">number</span></h5>
+									<h5>messageID: <span class="tsd-signature-type">string</span></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>message identifier to stop listen for</p>
+									</div>
 								</li>
 								<li>
-									<h5>currency: <span class="tsd-signature-type">string</span></h5>
+									<h5>callback: <span class="tsd-signature-type">Function</span></h5>
 									<div class="tsd-comment tsd-typography">
-										<p>Name of the currency to set</p>
+										<p>The callback to stop calling</p>
 									</div>
 								</li>
 							</ul>
-							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">Object</span><span class="tsd-signature-symbol">&gt;</span></h4>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4>
 						</li>
 					</ul>
 				</section>
@@ -302,13 +395,13 @@
 					<li class=" tsd-kind-external-module">
 						<a href="../modules/_services_lobby_.html">"services/lobby"</a>
 					</li>
-					<li class=" tsd-kind-external-module">
+					<li class="current tsd-kind-external-module">
 						<a href="../modules/_services_messages_.html">"services/messages"</a>
 					</li>
 					<li class=" tsd-kind-external-module">
 						<a href="../modules/_services_session_.html">"services/session"</a>
 					</li>
-					<li class="current tsd-kind-external-module">
+					<li class=" tsd-kind-external-module">
 						<a href="../modules/_services_wallet_.html">"services/wallet"</a>
 					</li>
 					<li class=" tsd-kind-external-module">
@@ -321,27 +414,36 @@
 				</ul>
 				<ul class="current">
 					<li class="current tsd-kind-class tsd-parent-kind-external-module">
-						<a href="_services_wallet_.publicwallet.html" class="tsd-kind-icon">Public<wbr>Wallet</a>
+						<a href="_services_messages_.messagesservice.html" class="tsd-kind-icon">Messages<wbr>Service</a>
 						<ul>
-							<li class=" tsd-kind-constructor tsd-parent-kind-class">
-								<a href="_services_wallet_.publicwallet.html#constructor" class="tsd-kind-icon">constructor</a>
+							<li class=" tsd-kind-constructor tsd-parent-kind-class tsd-is-inherited">
+								<a href="_services_messages_.messagesservice.html#constructor" class="tsd-kind-icon">constructor</a>
+							</li>
+							<li class=" tsd-kind-property tsd-parent-kind-class tsd-is-inherited">
+								<a href="_services_messages_.messagesservice.html#container" class="tsd-kind-icon">container</a>
+							</li>
+							<li class=" tsd-kind-get-signature tsd-parent-kind-class tsd-is-inherited tsd-is-protected">
+								<a href="_services_messages_.messagesservice.html#events" class="tsd-kind-icon">events</a>
+							</li>
+							<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-overwrite">
+								<a href="_services_messages_.messagesservice.html#_boot" class="tsd-kind-icon">_boot</a>
 							</li>
 							<li class=" tsd-kind-method tsd-parent-kind-class">
-								<a href="_services_wallet_.publicwallet.html#addbalance" class="tsd-kind-icon">add<wbr>Balance</a>
+								<a href="_services_messages_.messagesservice.html#listen" class="tsd-kind-icon">listen</a>
 							</li>
 							<li class=" tsd-kind-method tsd-parent-kind-class">
-								<a href="_services_wallet_.publicwallet.html#getbalance" class="tsd-kind-icon">get<wbr>Balance</a>
+								<a href="_services_messages_.messagesservice.html#send" class="tsd-kind-icon">send</a>
+							</li>
+							<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-inherited">
+								<a href="_services_messages_.messagesservice.html#setcontainer" class="tsd-kind-icon">set<wbr>Container</a>
 							</li>
 							<li class=" tsd-kind-method tsd-parent-kind-class">
-								<a href="_services_wallet_.publicwallet.html#updatebalance" class="tsd-kind-icon">update<wbr>Balance</a>
+								<a href="_services_messages_.messagesservice.html#unlisten" class="tsd-kind-icon">unlisten</a>
 							</li>
 						</ul>
 					</li>
 				</ul>
 				<ul class="after-current">
-					<li class=" tsd-kind-class tsd-parent-kind-external-module">
-						<a href="_services_wallet_.walletservice.html" class="tsd-kind-icon">Wallet<wbr>Service</a>
-					</li>
 				</ul>
 			</nav>
 		</div>
