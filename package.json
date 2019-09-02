@@ -1,6 +1,6 @@
 {
   "name": "@miniclip/instant",
-  "version": "0.1.6",
+  "version": "0.1.7",
   "description": "Miniclip FB Instant Games SDK",
   "main": "dist/mcinstant.js",
   "typings": "./dist/index.d.ts",

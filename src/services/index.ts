@@ -6,5 +6,7 @@ export enum Modules {
     CURRENCIES = "currencies",
     INSTANT_STORAGE = "storage",
     GLOBAL_STORE = "global_store",
-    EVENTS = "events"
+    EVENTS = "events",
+    MESSAGES = "messages",
+    LOBBY = "lobby"
 }

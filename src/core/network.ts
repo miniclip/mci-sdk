@@ -2,6 +2,8 @@ import axios, { AxiosInstance, AxiosResponse, AxiosRequestConfig, AxiosPromise }
 import { Store } from '../store';
 import DIContainer from '../utils/dicontainer';
 import { Modules } from '../services';
+import { ServerCommsManager } from '../backend/ServerCommsManager';
+import { Socket } from '../backend/Socket';
 
 const axiosRetry = require('axios-retry');
 const { isNetworkOrIdempotentRequestError } = require('axios-retry');
@@ -94,14 +96,17 @@ export class NetworkManager implements INetworkManager {
     private axios:AxiosInstance;
     private store:Store;
 
+    private serverComm:ServerCommsManager
+
     constructor({
-        endpointURL = "",
-        container
+        environment = "production",
+        container,
+        app_id
     }: NetworkOptions) {
         this.store = container.get(Modules.GLOBAL_STORE);
 
         this.axios = axios.create({
-            baseURL: endpointURL
+            baseURL: this.getAPIEndpointURL(environment, app_id)
         })
 
         this.axios.interceptors.request.use(config => {
@@ -164,7 +169,11 @@ export class NetworkManager implements INetworkManager {
                 return retryCount * 500;
             }
         })
+
+        this.serverComm = new ServerCommsManager(""+app_id, new Socket(this.getWSEndpointURL(environment)));
     }
+
+    public get ws():ServerCommsManager { return this.serverComm; }
 
     public get(url:string, config?: AxiosRequestConfig ){
         return this.axios.get(url, config);
@@ -185,9 +194,31 @@ export class NetworkManager implements INetworkManager {
     private getSignedMessage():Promise<FBInstant.SignedPlayerInfo>{
         return FBInstant.player.getSignedPlayerInfoAsync();
     }
+
+    private getAPIEndpointURL(environment:string, app_id:string){
+        var baseurl = "";
+        switch(environment){
+            case "development": baseurl = "dev-mci-ws"; break;
+            case "sandbox": baseurl = "sandbox-mci-ws"; break;
+            default:
+            baseurl = "prod-mci-ws";
+        }
+        return `https://${baseurl}.miniclippt.com/apps/${app_id}`;
+    }
+
+    private getWSEndpointURL(environment:string){
+        var baseurl = "";
+        switch(environment){
+            case "development": baseurl = "dev"; break;
+            default:
+            baseurl = "prod";
+        }
+        return `wss://${baseurl}-mci-os.miniclippt.com/ws`;
+    }
 }
 
 export interface NetworkOptions {
-    endpointURL?:string
+    environment?:string
     container:DIContainer
+    app_id: string
 } 

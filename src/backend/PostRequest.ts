@@ -45,9 +45,10 @@ export class PostRequest implements IRequest {
                 }
             };
 
-            this.handleError = () => {
+            this.handleError = (err:any) => {
+                const reason = err != null && "reason" in err ? err.reason : "";
                 clear();
-                reject();
+                reject(reason);
             };
 
             const sendMessage = () => {

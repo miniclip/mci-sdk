@@ -23,7 +23,9 @@ describe('NetworkManager', () => {
 
         store.clear();
         network = new NetworkManager({
-            endpointURL: BASE_ENDPOINT,
+            //endpointURL: BASE_ENDPOINT,
+            app_id: '1',
+            environment: "production",
             container
         });
 
