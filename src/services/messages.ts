@@ -67,7 +67,7 @@ export class MessagesService extends BaseService {
     let callbacks = this.listeners.get(message.id);
     if (callbacks == null) return;
     callbacks.forEach((c) => {
-      c(message.id, message.payload.data);
+      c(message.id, message.sender_id, message.payload.data);
     })
   }
 
