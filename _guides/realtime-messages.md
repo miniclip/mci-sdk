@@ -5,7 +5,7 @@ menuOrder: 1
 ---
 
 # Realtime Messages
-
+This feature is only available on version 0.1.7
 
 ## List Online Friends
 To list friends who play the game and are currently online use the `getOnlineFriends` method in the lobby service.
