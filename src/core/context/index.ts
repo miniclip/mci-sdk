@@ -11,6 +11,10 @@ export class MCContext implements IContext {
   public getOtherPlayers():Promise<Array<PlayerInfo>> {
     return this._handler.getOtherPlayers();
   }
+
+  public getFriends():Promise<Array<PlayerInfo>> {
+    return this._handler.getFriends();
+  }
 }
 
 var handler = new FBContext();

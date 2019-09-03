@@ -1,6 +1,4 @@
-import { Challenge } from "../models";
-import { ChallengeType } from "../models/Challenge";
-import { BaseService } from "../core/services";
+import { BaseService } from "@/core/services";
 
 export interface ISessionService {
   setData(params: Object): void;

@@ -1,4 +1,6 @@
-/// <reference types="../../../types/fbinstant" />
+/// <reference types="../types/fbinstant" />
+
+import 'mocha'
 
 const globalAny:any = global;
 
@@ -48,6 +50,12 @@ globalAny.FBInstant = {
           getPlayerID: () => 123456789
         });
     }),
+    getConnectedPlayersAsync: () => new Promise(resolve => {
+      resolve([
+        new DummyPlayer("1", "John", ""),
+        new DummyPlayer("2", "Smith", "")
+      ]);
+    }),
     getDataAsync: local_getDataAsync,
     setDataAsync: local_setDataAsync,
     flushDataAsync: () => { return Promise.resolve(); }
@@ -55,3 +63,19 @@ globalAny.FBInstant = {
   setSessionData: () => {}
   
 };
+
+class DummyPlayer implements FBInstant.ContextPlayer {
+  id:string;
+  name:string;
+  photo:string;
+  
+  constructor(id:string, name:string, photo:string){
+    this.id = id;
+    this.name = name;
+    this.photo = photo;
+  }
+
+  getID(){ return this.id; }
+  getName(){ return this.name; }
+  getPhoto(){ return this.photo; }
+}

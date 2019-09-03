@@ -55,6 +55,13 @@ declare namespace FBInstant {
          * Flushes any changes to the player data
          * */
         flushDataAsync(): Promise<boolean>;
+
+        /**
+         * Fetches an array of ConnectedPlayer objects containing information about 
+         * active players (people who played the game in the last 90 days) 
+         * that are connected to the current player.
+         */
+        getConnectedPlayersAsync(): Promise<Array<ContextPlayer>>;
     }
 
     interface Context {

@@ -5,7 +5,7 @@ import DIContainer from "../utils/dicontainer";
 import { Modules } from "../services";
 import { SessionService } from "../services/session";
 import { Challenge } from "./challenge";
-import { DummyNetworkManager } from "../core/network";
+import { DummyNetworkManager } from "../core/tests/dummy_network";
 
 const now = Math.floor(new Date().getTime() / 1000);
 

@@ -9,7 +9,7 @@ import { Modules } from '../services';
 
 const HTTP_STATUS_INTERNAL_SERVER_ERROR = 500;
 const HTTP_STATUS_OK = 200;
-const BASE_ENDPOINT = "http://example.com";
+const BASE_ENDPOINT = "https://prod-mci-ws.miniclippt.com";
 
 
 describe('NetworkManager', () => {
@@ -23,7 +23,8 @@ describe('NetworkManager', () => {
 
         store.clear();
         network = new NetworkManager({
-            endpointURL: BASE_ENDPOINT,
+            app_id: '1',
+            environment: "production",
             container
         });
 
@@ -35,21 +36,17 @@ describe('NetworkManager', () => {
     it('should add auth token header if set in store', (done) => {
         store.set('auth-token', 'dummy');
         
-        let mock = nock(BASE_ENDPOINT)
+        let mock = nock(BASE_ENDPOINT + "/apps/1")
                         .matchHeader("x-auth-token", "dummy")
                         .get('/test1')
                         .reply(HTTP_STATUS_OK);
 
 
-       
-
         network.get("/test1").then(() => {
             assert.isTrue(mock.isDone());
 
             done();
-        });
-
-        
+        })
     })
 
     it('should retry on network failure', (done) => {

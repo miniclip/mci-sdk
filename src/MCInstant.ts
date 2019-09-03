@@ -8,6 +8,9 @@ import { CurrencyService, CurrencyAmount } from "./services/currencies";
 import { Store } from "./store";
 import { SessionService } from "./services/session";
 import { InstantStorage } from "./utils/instant-storage";
+import { MessagesService } from "./services/messages";
+import { EVENT_WS_CONNECTED } from "./events";
+import { LobbyService } from "./services/lobby";
 
 declare var VERSION:string;
 
@@ -20,6 +23,8 @@ export class MCInstant {
 
   public wallet: PublicWallet; 
   public challenges: ChallengeService;
+  public lobby: LobbyService;
+  public messages: MessagesService;
 
   constructor({
     environment = MCIEnvironment.PRODUCTION,
@@ -41,37 +46,40 @@ export class MCInstant {
     _store.set("challenge_reward", challenge_reward);
 
     const network = new NetworkManager({
-      endpointURL: this.getEndpointUrl(environment, app_id),
+      app_id: app_id,
+      environment: environment,
+      //endpointURL: this.getEndpointUrl(environment, app_id),
       container: this.di
     });
     this.di.bind(Modules.NETWORK, network);
+
+    this.di.bind(Modules.MESSAGES, new MessagesService())
 
     this.di.bind(Modules.SESSION, new SessionService());
     this.di.bind(Modules.INSTANT_STORAGE, new InstantStorage());
     this.di.bind(Modules.CURRENCIES, _currencies);
     this.di.bind(Modules.WALLET, new WalletService());
     this.di.bind(Modules.CHALLENGES, new ChallengeService());
+    this.di.bind(Modules.LOBBY, new LobbyService());
 
     this.di.boot();
 
     this.challenges = this.di.get(Modules.CHALLENGES);
     this.wallet = (<WalletService>this.di.get(Modules.WALLET)).publicWallet;
+    this.lobby = <LobbyService>this.di.get(Modules.LOBBY);
+    this.messages = <MessagesService>this.di.get(Modules.MESSAGES);
+
+    network.connect().then(() => {
+      this.events.emit(EVENT_WS_CONNECTED)
+    }, () => {
+      console.log("Failed to connect");
+    })
   }
 
   get events() {
     return this.di.events;
   }
 
-  private getEndpointUrl(environment:string, app_id:string = ""){
-    var baseurl = "";
-    switch(environment){
-      case "development": baseurl = "fbi-ws-dev"; break;
-      case "sandbox": baseurl = "fbi-ws-sandbox"; break;
-      default:
-        baseurl = "prod-mci-ws";
-    }
-    return `https://${baseurl}.miniclippt.com/apps/${app_id}`;
-  }
 }
 
 export enum MCIEnvironment {
