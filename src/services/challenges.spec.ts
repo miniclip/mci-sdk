@@ -104,15 +104,14 @@ describe("ChallengeService", function() {
     });
   });
 
-  it("should filter out invalid Challenges", () => {
+  it("should filter out invalid Challenges", async () => {
     network.addResponse(200, dummyData_2);
 
     const challengeService = new ChallengeService();
     challengeService.setContainer(container)._boot();
 
-    challengeService.updateList().then(challenges => {
-      expect(challenges).length(1);
-    });
+    const challenges = await challengeService.updateList();
+    expect(challenges).length(1, "invalid challenges are filtered out");
   });
 
   it("should clear up completed challenges", () => {
