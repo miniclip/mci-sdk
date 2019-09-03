@@ -8,6 +8,9 @@ class MCContext {
     getOtherPlayers() {
         return this._handler.getOtherPlayers();
     }
+    getFriends() {
+        return this._handler.getFriends();
+    }
 }
 exports.MCContext = MCContext;
 var handler = new fbinstant_1.default();

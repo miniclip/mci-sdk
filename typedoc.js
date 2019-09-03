@@ -5,7 +5,8 @@ module.exports = {
     '**/index.ts',
     'src/logger.ts',
     'src/core/**/*.ts',
-    'src/utils/**/*.ts'
+    'src/utils/**/*.ts',
+    'src/backend/**/*.ts'
   ],
   ignoreCompilerErrors: true,
   excludeExternals: true,
