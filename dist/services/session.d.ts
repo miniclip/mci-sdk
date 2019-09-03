@@ -1,4 +1,4 @@
-import { BaseService } from "../core/services";
+import { BaseService } from "@/core/services";
 export interface ISessionService {
     setData(params: Object): void;
     setPublicState(data: Object): void;

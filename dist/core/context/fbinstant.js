@@ -30,6 +30,24 @@ class FBContext {
                     });
                 });
                 resolve(filteredPlayers);
+            }, () => {
+                resolve([]);
+            });
+        });
+    }
+    getFriends() {
+        return new Promise((resolve, reject) => {
+            FBInstant.player.getConnectedPlayersAsync().then((players) => {
+                var friends = players.map((p) => {
+                    return {
+                        id: p.getID(),
+                        name: p.getName(),
+                        photo: p.getPhoto()
+                    };
+                });
+                resolve(friends);
+            }, (e) => {
+                resolve([]);
             });
         });
     }
