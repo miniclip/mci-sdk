@@ -29,7 +29,7 @@ export class MessagesService extends BaseService {
     return new Promise((resolve, reject) => {
       var message = new PostRequest(messageID, recipientID, new MessagePayloadWrapper(payload))
       
-      this.network.ws.send(message).then(
+      this.network.send(message).then(
         (data) => {
           resolve(true)
         },
@@ -46,7 +46,7 @@ export class MessagesService extends BaseService {
    */
   public listen(messageID:string, callback:Function) {
     if (!this.listeners.hasFor(messageID)){
-      this.network.ws.registerPostHandler(messageID, this.messageHandler);
+      this.network.getWS().registerPostHandler(messageID, this.messageHandler);
     }
     this.listeners.add(messageID, callback);
   }
@@ -59,7 +59,7 @@ export class MessagesService extends BaseService {
   public unlisten(messageID:string, callback:Function ){
     this.listeners.remove(messageID, callback);
     if (!this.listeners.hasFor(messageID)){
-      this.network.ws.unregisterPostHandler(messageID, this.messageHandler);
+      this.network.getWS().unregisterPostHandler(messageID, this.messageHandler);
     }
   }
 

@@ -5,17 +5,27 @@ import { LoginRequest } from './LoginRequest';
 import { OkRequest } from './OkRequest';
 import { PingRequest } from './PingRequest';
 import { ResponseTypes } from './ResponseTypes';
-import { SocketMessageHandler } from './SocketMessageHandler';
+import { SocketMessageHandler, ISocketMessageHandler } from './SocketMessageHandler';
+import { CallbackContainer, Action } from '@/utils/data';
 
 const EMPTY_FUNC = () => { /* empty */ };
 
-export class ServerCommsManager extends SocketMessageHandler {
+export interface IServerCommManager extends ISocketMessageHandler {
+    connect():Promise<any>;
+    send(request:IRequest):Promise<any>;
+
+    onConnect:Action;
+}
+
+export class ServerCommsManager extends SocketMessageHandler implements IServerCommManager {
     private socket:ISocket;
     private loginRequest:LoginRequest;
     private pingRequest:PingRequest;
     
     private requestsQueue:Array<(loginSuccess:boolean) => void>;
     private isLoggedIn:boolean = false;
+
+    public onConnect:Action = new Action();
 
     constructor(appID:string, socket:ISocket) {
         super(socket);
@@ -37,7 +47,14 @@ export class ServerCommsManager extends SocketMessageHandler {
 
     public connect() {
         return new Promise ((resolve, reject) => {
-            this.requestsQueue.push((loginSuccess:boolean) => loginSuccess ? resolve() : reject());
+            this.requestsQueue.push((loginSuccess:boolean) => {
+                if (loginSuccess){
+                    this.onConnect.emit();
+                    resolve();
+                } else {
+                    reject();
+                }
+            });
             this.socket.connect();
         });
     }

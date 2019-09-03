@@ -69,7 +69,7 @@ export class MCInstant {
     this.lobby = <LobbyService>this.di.get(Modules.LOBBY);
     this.messages = <MessagesService>this.di.get(Modules.MESSAGES);
 
-    network.ws.connect().then(() => {
+    network.connect().then(() => {
       this.events.emit(EVENT_WS_CONNECTED)
     }, () => {
       console.log("Failed to connect");

@@ -2,7 +2,14 @@ import { IPostResponse } from './IPostMessage';
 import { ISocket } from './ISocket';
 import { ResponseTypes } from './ResponseTypes';
 
-export class SocketMessageHandler {
+export interface ISocketMessageHandler {
+    registerHandler(type:ResponseTypes, callback:(data:any) => void):void;
+    unregisterHandler(type:ResponseTypes, callback:(data:any) => void):void;
+    registerPostHandler(type:string, callback:(data:IPostResponse) => void):void;
+    unregisterPostHandler(type:string, callback:(data:IPostResponse) => void):void;
+}
+
+export class SocketMessageHandler implements ISocketMessageHandler{
     private handlers:Map<ResponseTypes, Array<(data:any) => void>> = new Map();
     private postHandlers:Map<string, Array<(data:IPostResponse) => void>> = new Map();
 

@@ -1,7 +1,6 @@
 import "mocha";
 import DIContainer from "../utils/dicontainer";
 import { Modules } from ".";
-import { DummyNetworkManager } from "../core/network";
 import { ChallengeService } from "./challenges";
 
 import { assert, expect } from "chai";
@@ -12,6 +11,7 @@ import { EVENT_CHALLENGE_ENDED } from "../events";
 import { WalletService } from "./wallet";
 import { Store } from "../store";
 import { Challenge } from "../models";
+import { DummyNetworkManager } from "../core/tests/dummy_network";
 
 const now = Math.floor(new Date().getTime() / 1000);
 

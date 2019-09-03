@@ -2,8 +2,10 @@ import axios, { AxiosInstance, AxiosResponse, AxiosRequestConfig, AxiosPromise }
 import { Store } from '../store';
 import DIContainer from '../utils/dicontainer';
 import { Modules } from '../services';
-import { ServerCommsManager } from '../backend/ServerCommsManager';
+import { ServerCommsManager, IServerCommManager } from '../backend/ServerCommsManager';
 import { Socket } from '../backend/Socket';
+import { Server } from 'http';
+import { IRequest } from 'src/backend/IRequest';
 
 const axiosRetry = require('axios-retry');
 const { isNetworkOrIdempotentRequestError } = require('axios-retry');
@@ -18,77 +20,10 @@ export interface INetworkManager {
     post<T>(url:string, data?:any, config?: AxiosRequestConfig ):AxiosPromise<T>
     put<T>(url:string, data?:any, config?:AxiosRequestConfig):AxiosPromise<T>
     delete<T>(url:string, config?:AxiosRequestConfig):AxiosPromise<T>
-}
 
-export class DummyNetworkManager implements INetworkManager {
-
-    public loopResponses:boolean = false;
-    public responses:any[] = [];
-    private iterator = 0;
-
-    private createResponse(status:number, data:number){
-        return {
-            data,
-            status: status,
-            statusText: "",
-            headers: [],
-            config: {}
-        }
-    }
-
-    private getNextResponse(){
-        if (this.responses.length == 0) {
-            throw new Error("No responses were set!");
-        }
-
-        if (this.iterator >= this.responses.length){
-            if (this.loopResponses){
-                this.iterator = 0;
-            } else {
-                throw new Error("Consumed all responses")
-            }
-        }
-
-        return this.responses[this.iterator++];
-    }
-
-    public addResponse(status:number, response:any = null){
-        let data = JSON.parse(JSON.stringify(response))
-        this.responses.push({ status, data });
-    }
-
-    public clear(){
-        this.responses = [];
-        this.iterator = 0;
-    }
-
-    public get(url:string, config?:AxiosRequestConfig){
-        return new Promise<AxiosResponse>((resolve) => {
-            let {status, data} = this.getNextResponse();
-            resolve(this.createResponse(status, data));
-        })
-    }
-
-    public post(url:string, data?:any, config?:AxiosRequestConfig){
-        return new Promise<AxiosResponse>((resolve) => {
-            let {status, data} = this.getNextResponse();
-            resolve(this.createResponse(status, data));
-        })
-    }
-
-    public put(url:string, data?:any, config?:AxiosRequestConfig){
-        return new Promise<AxiosResponse>((resolve) => {
-            let {status, data} = this.getNextResponse();
-            resolve(this.createResponse(status, data));
-        })
-    }
-
-    public delete(url:string, config?:AxiosRequestConfig){
-        return new Promise<AxiosResponse>((resolve) => {
-            let {status, data} = this.getNextResponse();
-            resolve(this.createResponse(status, data));
-        })
-    }
+    send(request: IRequest):Promise<any>;
+    connect():Promise<any>;
+    getWS():IServerCommManager;
 }
 
 export class NetworkManager implements INetworkManager {
@@ -173,8 +108,6 @@ export class NetworkManager implements INetworkManager {
         this.serverComm = new ServerCommsManager(""+app_id, new Socket(this.getWSEndpointURL(environment)));
     }
 
-    public get ws():ServerCommsManager { return this.serverComm; }
-
     public get(url:string, config?: AxiosRequestConfig ){
         return this.axios.get(url, config);
     }
@@ -190,6 +123,19 @@ export class NetworkManager implements INetworkManager {
     public delete(url:string, config?: AxiosRequestConfig ){
         return this.axios.delete(url, config);
     }
+
+    public send(request:IRequest):Promise<any> {
+        return this.serverComm.send(request);
+    }
+
+    public connect():Promise<any>{
+        return this.serverComm.connect();
+    }
+
+    public getWS():IServerCommManager {
+        return this.serverComm;
+    }
+
 
     private getSignedMessage():Promise<FBInstant.SignedPlayerInfo>{
         return FBInstant.player.getSignedPlayerInfoAsync();

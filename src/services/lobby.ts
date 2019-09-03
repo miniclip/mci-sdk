@@ -15,10 +15,11 @@ export class LobbyService extends BaseService {
   private onlineFriends:Array<OnlinePlayerInfo> = [];
 
   _boot(){
-    this.events.on(EVENT_WS_CONNECTED, this.onWSConnect.bind(this))
+    //this.events.on(EVENT_WS_CONNECTED, this.onWSConnect.bind(this))
     this.network = this.container.get(Modules.NETWORK);
 
-    this.network.ws.registerHandler(ResponseTypes.FRIEND_ONLINE, this.onFriendOnline.bind(this))
+    this.network.getWS().onConnect.listen(this.onWSConnect.bind(this));
+    this.network.getWS().registerHandler(ResponseTypes.FRIEND_ONLINE, this.onFriendOnline.bind(this))
   }
 
   /**
@@ -33,7 +34,6 @@ export class LobbyService extends BaseService {
   }
 
   private onFriendOnline(data: { type: string, player_id: string}){
-    console.log(data);
     if (data.type != "friend_online") return;
 
     this.addOnlineFriend(data.player_id)
@@ -73,14 +73,14 @@ export class LobbyService extends BaseService {
       friends.push(p.id);
     })
 
-    this.network.ws.registerHandler(ResponseTypes.ONLINE_FRIENDS, (onlineData: {friends:Array<any>, type:string }) => {
+    this.network.getWS().registerHandler(ResponseTypes.ONLINE_FRIENDS, (onlineData: {friends:Array<any>, type:string }) => {
       if (onlineData.type != "online_friends") return;
 
       onlineData.friends.forEach((fid:string) => {
         this.addOnlineFriend(fid, false)
       })
     })
-    this.network.ws.send(new OnlineFriendsRequest(friends));
+    this.network.send(new OnlineFriendsRequest(friends));
   }
 
 }

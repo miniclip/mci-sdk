@@ -11,7 +11,7 @@
   ],
   "scripts": {
     "test": "npm run clean && npm run test:spec",
-    "test:spec": "TS_NODE_PROJECT=tsconfig.tests.json nyc mocha -r ts-node/register -r src/core/tests/setup.ts src/**/*.spec.ts || true",
+    "test:spec": "ts-mocha --paths -p ./tsconfig.json -r src/core/tests/setup.ts src/**/*.spec.ts || true",
     "build": "npm run clean && tsc -p tsconfig.json && npm run clean:js && webpack --config webpack.js",
     "clean": "shx rm -rf ./dist ./_bundles",
     "clean:js": "shx rm -rf ./dist/*.js ./dist/**/*.js",
@@ -29,10 +29,10 @@
   "devDependencies": {
     "@types/chai": "^4.1.7",
     "@types/chai-as-promised": "^7.1.0",
+    "@types/loglevel": "^1.5.3",
     "@types/mocha": "^5.2.5",
     "@types/nock": "9.3.0",
     "@types/sinon": "^7.0.5",
-    "@types/loglevel": "^1.5.3",
     "browserify": "^16.2.3",
     "chai": "^4.2.0",
     "chai-as-promised": "^7.1.1",
@@ -44,6 +44,7 @@
     "sinon": "^7.2.3",
     "source-map-support": "^0.5.9",
     "ts-loader": "^5.3.3",
+    "ts-mocha": "^6.0.0",
     "ts-node": "^7.0.1",
     "tsify": "^4.0.1",
     "typedoc": "^0.14.2",
