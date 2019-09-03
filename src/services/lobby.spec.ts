@@ -1,14 +1,14 @@
 import 'mocha';
 
-
 import { expect } from "chai";
-import { CurrencyService } from './currencies';
 import DIContainer from '../utils/dicontainer';
 import { DummyNetworkManager, DummyServerComm } from "../core/tests/dummy_network";
 import { Modules } from '.';
 import { Store } from '../store';
 import { LobbyService } from './lobby';
 import { ResponseTypes } from '@/backend/ResponseTypes';
+import * as sinon from "sinon";
+import { EVENT_FRIEND_ONLINE } from '@/events';
 
 describe('LobbyService', () => {
 
@@ -17,12 +17,15 @@ describe('LobbyService', () => {
   const network = new DummyNetworkManager();
   const store = container.bind(Modules.GLOBAL_STORE, new Store());
   container.bind(Modules.NETWORK, network);
-  const dummyWS = network.dummyWS as DummyServerComm;
+  var dummyWS:DummyServerComm;
 
   beforeEach(() => {
     network.clear();
     network.loopResponses = true;
     store.clear();
+
+    dummyWS = new DummyServerComm()
+    network.dummyWS = dummyWS  as DummyServerComm
 
     container.events.removeAllListeners();
   });
@@ -53,5 +56,21 @@ describe('LobbyService', () => {
 
     const updatedFriends3 = lobby.getOnlineFriends();
     expect(updatedFriends).to.have.lengthOf(2, "Unknown friend should not be added!");
+  })
+
+  it('emits event when friend is online', async () => {
+    
+    var spy = sinon.spy();
+    
+    container.events.on(EVENT_FRIEND_ONLINE, spy);
+
+    const lobby = new LobbyService();
+    lobby.setContainer(container)._boot();
+
+    await dummyWS.connect();
+
+    dummyWS.trigger(ResponseTypes.FRIEND_ONLINE, { type: "friend_online", player_id: "1"})
+
+    expect(spy.callCount).to.be.equal(1);
   })
 })

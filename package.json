@@ -11,7 +11,7 @@
   ],
   "scripts": {
     "test": "npm run clean && npm run test:spec",
-    "test:spec": "ts-mocha --paths -p ./tsconfig.json -r src/core/tests/setup.ts src/**/*.spec.ts || true",
+    "test:spec": "TS_NODE_PROJECT=tsconfig.tests.json nyc ts-mocha --paths --file src/setup_tests.ts src/**/*.spec.ts || true",
     "build": "npm run clean && tsc -p tsconfig.json && npm run clean:js && webpack --config webpack.js",
     "clean": "shx rm -rf ./dist ./_bundles",
     "clean:js": "shx rm -rf ./dist/*.js ./dist/**/*.js",

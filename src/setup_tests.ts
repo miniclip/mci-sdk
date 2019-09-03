@@ -1,4 +1,6 @@
-/// <reference types="../../../types/fbinstant" />
+/// <reference types="../types/fbinstant" />
+
+import 'mocha'
 
 const globalAny:any = global;
 
@@ -61,7 +63,6 @@ globalAny.FBInstant = {
   setSessionData: () => {}
   
 };
-
 
 class DummyPlayer implements FBInstant.ContextPlayer {
   id:string;
