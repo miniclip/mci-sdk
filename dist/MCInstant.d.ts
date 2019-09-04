@@ -14,7 +14,7 @@ export declare class MCInstant {
     challenges: ChallengeService;
     lobby: LobbyService;
     messages: MessagesService;
-    constructor({ environment, logLevel, app_id, challenge_reward, currencies }: MCInstantOptions);
+    constructor({ environment, logLevel, app_id, challenge_reward, currencies, realtime }: MCInstantOptions);
     readonly events: import("./utils/eventemitter").EventEmitter;
 }
 export declare enum MCIEnvironment {
@@ -28,4 +28,5 @@ export interface MCInstantOptions {
     logLevel?: LogLevel;
     challenge_reward?: CurrencyAmount;
     currencies?: string[];
+    realtime: boolean;
 }
