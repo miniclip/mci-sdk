@@ -31,7 +31,8 @@ export class MCInstant {
     logLevel = LogLevel.INFO,
     app_id = "",
     challenge_reward = { value: 100, currency: "points" },
-    currencies = [ "points" ]
+    currencies = [ "points" ],
+    realtime = false
   }: MCInstantOptions) {
     this.di = new DIContainer();
 
@@ -69,11 +70,13 @@ export class MCInstant {
     this.lobby = <LobbyService>this.di.get(Modules.LOBBY);
     this.messages = <MessagesService>this.di.get(Modules.MESSAGES);
 
-    network.connect().then(() => {
-      this.events.emit(EVENT_WS_CONNECTED)
-    }, () => {
-      console.log("Failed to connect");
-    })
+    if (realtime) {
+      network.connect().then(() => {
+        this.events.emit(EVENT_WS_CONNECTED)
+      }, () => {
+        console.log("Failed to connect");
+      })
+    }
   }
 
   get events() {
@@ -96,4 +99,5 @@ export interface MCInstantOptions {
   
   challenge_reward?: CurrencyAmount;
   currencies?: string[]
+  realtime: boolean
 }
