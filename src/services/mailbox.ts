@@ -19,4 +19,19 @@ export class MailboxService extends BaseService {
         this.network = this.container.get(Modules.NETWORK);
     }
 
+    public async send(message: any, recipient: string):Promise<String> {
+        return new Promise(async (resolve) => {
+            // const playerId = '1'; // FBInstant.player.getID();
+            const url = "/players/" + recipient + "/mailbox";
+
+            try {
+                const result:String = await <any>this.network.put(url, message);
+                resolve(result);
+            } catch (error) {
+                console.error("Failed to send message to mailbox", error);
+
+                resolve('');
+            }
+        });
+    }
 }
