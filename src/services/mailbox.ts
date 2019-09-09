@@ -19,12 +19,12 @@ export class MailboxService extends BaseService {
         this.network = this.container.get(Modules.NETWORK);
     }
 
-    public async send(recipient: string, message: any):Promise<String> {
+    public async send(recipient: string, messages: Array<any>):Promise<String> {
         return new Promise(async (resolve) => {
             const url = "/players/" + recipient + "/mailbox";
 
             try {
-                const result:String = await <any>this.network.put(url, message);
+                const result:String = await <any>this.network.put(url, messages);
                 resolve(result);
             } catch (error) {
                 console.error("Failed to send message to mailbox", error);
@@ -36,7 +36,7 @@ export class MailboxService extends BaseService {
 
     public async read():Promise<Array<any>> {
         return new Promise(async (resolve) => {
-            const playerId = '1'; //FBInstant.player.getID();
+            const playerId = FBInstant.player.getID();
             const url = "/players/" + playerId + "/mailbox";
 
             try {

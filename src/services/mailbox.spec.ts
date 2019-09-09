@@ -29,7 +29,7 @@ describe('MailboxService', () => {
         const mailbox = new MailboxService();
         mailbox.setContainer(container)._boot();
 
-        const result = await <any>mailbox.send('3222935531065574', 'test message');
+        const result = await <any>mailbox.send('3222935531065574', ['test message']);
         expect(result.data).equal('ok');
     })
 
@@ -39,7 +39,7 @@ describe('MailboxService', () => {
         const mailbox = new MailboxService();
         mailbox.setContainer(container)._boot();
 
-        const result = await <any>mailbox.send('1', 'test');
+        const result = await <any>mailbox.send('1', ['test']);
         expect(result.data).equal('ok');
 
         const message:String = 'test';
