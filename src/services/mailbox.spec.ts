@@ -24,4 +24,17 @@ describe('MailboxService', () => {
         expect(result.data).equal('ok');
     })
 
+    it("send and receive a message", async () => {
+        network.addResponse(200, 'ok');
+
+        const mailbox = new MailboxService();
+        mailbox.setContainer(container)._boot();
+
+        const result = await <any>mailbox.send('3222935531065574', 'test');
+        expect(result.data).equal('ok');
+
+        const message = await <any>mailbox.read();
+        expect(message.data).equal(['test'])
+    })
+
 });

@@ -34,4 +34,8 @@ export class MailboxService extends BaseService {
             }
         });
     }
+
+    public async read():Promise<Array<any>> {
+        return new Promise(async (resolve) => {});
+    }
 }
