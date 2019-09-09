@@ -20,7 +20,7 @@ describe('MailboxService', () => {
         const mailbox = new MailboxService();
         mailbox.setContainer(container)._boot();
 
-        const result = await <any>mailbox.send('test message', '1');
+        const result = await <any>mailbox.send('3222935531065574', 'test message');
         expect(result.data).equal('ok');
     })
 
