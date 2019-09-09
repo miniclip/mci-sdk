@@ -1,4 +1,4 @@
-import { AxiosResponse, AxiosRequestConfig, AxiosPromise } from 'axios';
+import { AxiosRequestConfig, AxiosPromise } from 'axios';
 import DIContainer from '../utils/dicontainer';
 import { IServerCommManager } from '../backend/ServerCommsManager';
 import { IRequest } from 'src/backend/IRequest';
@@ -16,10 +16,10 @@ export declare class NetworkManager implements INetworkManager {
     private store;
     private serverComm;
     constructor({ environment, container, app_id }: NetworkOptions);
-    get(url: string, config?: AxiosRequestConfig): Promise<AxiosResponse<any>>;
-    post(url: string, data?: any, config?: AxiosRequestConfig): Promise<AxiosResponse<any>>;
-    put(url: string, data?: any, config?: AxiosRequestConfig): Promise<AxiosResponse<any>>;
-    delete(url: string, config?: AxiosRequestConfig): Promise<AxiosResponse<any>>;
+    get(url: string, config?: AxiosRequestConfig): AxiosPromise<any>;
+    post(url: string, data?: any, config?: AxiosRequestConfig): AxiosPromise<any>;
+    put(url: string, data?: any, config?: AxiosRequestConfig): AxiosPromise<any>;
+    delete(url: string, config?: AxiosRequestConfig): AxiosPromise<any>;
     send(request: IRequest): Promise<any>;
     connect(): Promise<any>;
     getWS(): IServerCommManager;
