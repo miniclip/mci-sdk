@@ -21,7 +21,6 @@ export class MailboxService extends BaseService {
 
     public async send(recipient: string, message: any):Promise<String> {
         return new Promise(async (resolve) => {
-            // const playerId = '1'; // FBInstant.player.getID();
             const url = "/players/" + recipient + "/mailbox";
 
             try {
@@ -36,6 +35,17 @@ export class MailboxService extends BaseService {
     }
 
     public async read():Promise<Array<any>> {
-        return new Promise(async (resolve) => {});
+        return new Promise(async (resolve) => {
+            const playerId = '1'; //FBInstant.player.getID();
+            const url = "/players/" + playerId + "/mailbox";
+
+            try {
+                const result:Array<any> = await <any>this.network.get(url);
+                resolve(result);
+            } catch (error) {
+                console.error("Failed to fetch messages from mailbox", error);
+                resolve([]);
+            }
+        });
     }
 }
