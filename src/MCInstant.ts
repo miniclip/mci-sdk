@@ -11,6 +11,7 @@ import { InstantStorage } from "./utils/instant-storage";
 import { MessagesService } from "./services/messages";
 import { EVENT_WS_CONNECTED } from "./events";
 import { LobbyService } from "./services/lobby";
+import { MailboxService } from "./services/mailbox";
 
 declare var VERSION:string;
 
@@ -21,10 +22,11 @@ export class MCInstant {
   public di: DIContainer;
   private logger: Logger;
 
-  public wallet: PublicWallet; 
+  public wallet: PublicWallet;
   public challenges: ChallengeService;
   public lobby: LobbyService;
   public messages: MessagesService;
+  public mailbox: MailboxService;
 
   constructor({
     environment = MCIEnvironment.PRODUCTION,
@@ -62,6 +64,7 @@ export class MCInstant {
     this.di.bind(Modules.WALLET, new WalletService());
     this.di.bind(Modules.CHALLENGES, new ChallengeService());
     this.di.bind(Modules.LOBBY, new LobbyService());
+    this.di.bind(Modules.MAILBOX, new MailboxService());
 
     this.di.boot();
 
@@ -69,6 +72,7 @@ export class MCInstant {
     this.wallet = (<WalletService>this.di.get(Modules.WALLET)).publicWallet;
     this.lobby = <LobbyService>this.di.get(Modules.LOBBY);
     this.messages = <MessagesService>this.di.get(Modules.MESSAGES);
+    this.mailbox = <MailboxService>this.di.get(Modules.MAILBOX);
 
     if (realtime) {
       network.connect().then(() => {
@@ -93,10 +97,10 @@ export enum MCIEnvironment {
 export interface MCInstantOptions {
   environment?: MCIEnvironment;
   app_id: any;
-  
+
   logger?: any;
   logLevel?: LogLevel;
-  
+
   challenge_reward?: CurrencyAmount;
   currencies?: string[]
   realtime: boolean
