@@ -8,5 +8,6 @@ export declare enum Modules {
     GLOBAL_STORE = "global_store",
     EVENTS = "events",
     MESSAGES = "messages",
-    LOBBY = "lobby"
+    LOBBY = "lobby",
+    MAILBOX = "mailbox"
 }
