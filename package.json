@@ -1,6 +1,6 @@
 {
   "name": "@miniclip/instant",
-  "version": "0.1.7",
+  "version": "0.2.0",
   "description": "Miniclip FB Instant Games SDK",
   "main": "dist/mcinstant.js",
   "typings": "./dist/index.d.ts",
@@ -53,7 +53,7 @@
     "webpack-cli": "^3.2.1"
   },
   "dependencies": {
-    "axios": "^0.19.0",
+    "axios": "^0.18.0",
     "axios-retry": "^3.1.1",
     "loglevel": "^1.6.1"
   }

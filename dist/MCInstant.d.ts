@@ -5,6 +5,7 @@ import { ChallengeService } from "./services/challenges";
 import { CurrencyAmount } from "./services/currencies";
 import { MessagesService } from "./services/messages";
 import { LobbyService } from "./services/lobby";
+import { MailboxService } from "./services/mailbox";
 export declare class MCInstant {
     private static loggerName;
     static version: string;
@@ -14,6 +15,7 @@ export declare class MCInstant {
     challenges: ChallengeService;
     lobby: LobbyService;
     messages: MessagesService;
+    mailbox: MailboxService;
     constructor({ environment, logLevel, app_id, challenge_reward, currencies, realtime }: MCInstantOptions);
     readonly events: import("./utils/eventemitter").EventEmitter;
 }
